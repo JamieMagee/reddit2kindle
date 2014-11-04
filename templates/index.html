@@ -1,0 +1,46 @@
+{% extends "master.html" %}
+
+{% block content %}
+    <!-- Begin page content -->
+    <div class="container">
+        <div class="page-header">
+            <h1>reddit2kindle</h1>
+        </div>
+        <p class="lead">Send a reddit post directly to your kindle</p>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ category }} alert-dismissible" role="alert">
+                        <button type="button" class="close" data-dismiss="alert"><span
+                                aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        <form method="POST" action="{{ url_for('thread') }}">
+            <div class="row control-group">
+                <div class="form-group col-xs-12 floating-label-form-group controls">
+                    <label for="submission">Submission URL</label>
+                    <input type="text" id="submission" name="submission" class="form-control"
+                           placeholder="https://www.reddit.com/comments/92dd8/test_post_please_ignore">
+                </div>
+            </div>
+
+            <div class="row control-group">
+                <div class="form-group col-xs-12 floating-label-form-group controls">
+                    <label for="id">Kindle email address</label>
+                    <div class="input-group">
+                        <input type="text" id="email" name="email" class="form-control" placeholder="johnsmith">
+                        <span class="input-group-addon">@kindle.com</span>
+                    </div>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary btn-lg
+            ">Submit</button>
+        </form>
+    </div>
+
+{% endblock %}
