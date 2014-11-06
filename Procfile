@@ -1,0 +1,1 @@
+web: gunicorn reddit2kindle:app --log-file=-
