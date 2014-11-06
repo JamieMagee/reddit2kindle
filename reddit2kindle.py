@@ -15,13 +15,13 @@ def index():
 def thread():
     if util.validate_request(request.form) is not None:
         flash(util.validate_request(request.form), 'danger')
-        return redirect(url_for('index'))
+        return redirect(url_for('index', _external=True))
 
     try:
         submission = util.r.get_submission(url=request.form['submission'])
     except:
         flash('That wasn\'t a reddit link, was it?', 'danger')
-        return redirect(url_for('index'))
+        return redirect(url_for('index', _external=True))
     submission.replace_more_comments(limit=0)
 
     comments = util.get_comments(submission)
@@ -36,10 +36,10 @@ def thread():
 
     if status == 200:
         flash('Success!', 'success')
-        return redirect(url_for('index'))
+        return redirect(url_for('index', _external=True))
     else:
         flash('Uh oh! Something went wrong on our end', 'warning')
-        return redirect(url_for('index'))
+        return redirect(url_for('index', _external=True))
 
 
 @app.route('/top', methods=['POST'])
