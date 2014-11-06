@@ -4,7 +4,7 @@ import util
 import os
 
 app = Flask(__name__)
-
+app.secret_key = os.urandom(24)
 
 @app.route('/')
 def index():
@@ -54,5 +54,4 @@ def convert():
     return render_template('results.html', results=results, subreddit=subreddit, time=time, limit=limit)
 
 if __name__ == '__main__':
-    app.secret_key = os.urandom(24)
     app.run(debug=True)
