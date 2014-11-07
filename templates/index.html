@@ -2,16 +2,26 @@
 
 {% block content %}
     <!-- Begin page content -->
-    <div class="container">
-        <div class="page-header">
-            <h1>reddit2kindle</h1>
+    <header class="intro-header" style="background-image: url({{ url_for('static', filename='img/bg.jpg') }})">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <div class="site-heading">
+                        <h1>reddit2kindle</h1>
+                        <hr class="small">
+                        <span class="subheading">Send any reddit post directly to your kindle</span>
+                    </div>
+                </div>
+            </div>
         </div>
-        <p class="lead">Send a reddit post directly to your kindle</p>
+    </header>
 
+
+    <div class="container">
         {% with messages = get_flashed_messages(with_categories=true) %}
             {% if messages %}
                 {% for category, message in messages %}
-                    <div class="alert alert-{{ category }} alert-dismissible" role="alert">
+                    <div class="alert alert-{{ category }} alert-dismissible fade in" role="alert">
                         <button type="button" class="close" data-dismiss="alert"><span
                                 aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
                         {{ message }}
