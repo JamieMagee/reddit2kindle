@@ -39,7 +39,7 @@ def send_email(to, attachment, title):
     message.add_to(to + '@kindle.com')
     message.set_subject(title)
     message.set_text(' ')
-    message.set_from('reddit2kindle')
+    message.set_from('convert@reddit2kindle.com')
     message.add_attachment_stream('{}.html'.format(title), attachment)
     return sg.send(message)
 
