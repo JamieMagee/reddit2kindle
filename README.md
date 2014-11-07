@@ -15,14 +15,12 @@ Installation
 2. Install the required packages `pip install -r requirements.txt`
 3. Either create a `settings.cfg` file of the format:
 
-        ````
         [auth]
         username=johndoe@reddit2kindle.com
         password=hunter2
         [smtp]
         server=smtp.gmail.com
         port=587
-        ````
 or create environment variables for `SMTP_USERNAME`,`SMTP_PASSWORD`, `SMTP_SERVER`, and `SMTP_PORT`.
 4. Run the app `python reddit2kindle.py`
 
