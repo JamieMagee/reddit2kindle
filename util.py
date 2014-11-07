@@ -44,7 +44,7 @@ def send_email(to, attachment, title):
     msg['Subject'] = title
 
     attach = MIMEText(attachment, 'html', 'utf8')
-    attach.add_header('Content-Disposition', 'attachment', filename=title)
+    attach.add_header('Content-Disposition', 'attachment', filename=title + '.html')
     msg.attach(attach)
 
     s = smtplib.SMTP('smtp.mandrillapp.com', 587)
