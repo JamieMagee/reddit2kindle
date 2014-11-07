@@ -1,20 +1,22 @@
 {% extends "master.html" %}
 
 {% block content %}
-<!-- Begin page content -->
-<div class="container">
-  <div class="page-header">
-    <h1>Top {{ limit }} posts from {{ subreddit }} over {{ time }}</h1>
-  </div>
-  
-  {% for item in results %}
-    <div class="row">
-    	<h3>{{ item.post_title }} <small><a href="{{ item.post_url }}" target="__blank">Link</a></small></h3>
-    	<blockquote>
-    		<p>{{ item.post_text }}</p>
-    	</blockquote>
-    </div>
-  {% endfor %}
+    <!-- Begin page content -->
+    <div class="container">
+        <div class="page-header">
+            <h1>Top {{ limit }} posts from {{ subreddit }} over {{ time }}</h1>
+        </div>
 
-</div>
+        {% for item in results %}
+            <div class="row">
+                <h3>{{ item.post_title }}
+                    <small><a href="{{ item.post_url }}" target="__blank">Link</a></small>
+                </h3>
+                <blockquote>
+                    <p>{{ item.post_text }}</p>
+                </blockquote>
+            </div>
+        {% endfor %}
+
+    </div>
 {% endblock %}

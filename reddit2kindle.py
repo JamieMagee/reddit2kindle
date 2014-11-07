@@ -1,10 +1,14 @@
+import os
+
 from flask import Flask, request, redirect, url_for, flash
 from flask.templating import render_template
+
 import util
-import os
+
 
 app = Flask(__name__)
 app.secret_key = os.urandom(24)
+
 
 @app.route('/')
 def index():
@@ -32,9 +36,9 @@ def thread():
 
     attachment = render_template('comments.html', title=title, body=body, author=author, comments=comments)
 
-    status, msg = util.send_email(address, attachment, title)
+    status = util.send_email(address, attachment, title)
 
-    if status == 200:
+    if status is None:
         flash('Success!', 'success')
         return redirect(url_for('index', _external=True))
     else:
@@ -52,6 +56,7 @@ def convert():
     results = util.parse_subreddit_data(subreddit_data)
 
     return render_template('results.html', results=results, subreddit=subreddit, time=time, limit=limit)
+
 
 if __name__ == '__main__':
     app.run(debug=True)

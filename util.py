@@ -1,8 +1,11 @@
-import praw
-from markdown import markdown
-import sendgrid
+import smtplib
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
 import os
 from configparser import ConfigParser
+
+import praw
+from markdown import markdown
 
 
 def to_html(comment):
@@ -29,19 +32,27 @@ def get_auth():
         username = config.get('auth', 'username')
         password = config.get('auth', 'password')
     else:
-        username = os.environ['SENDGRID_USERNAME']
-        password = os.environ['SENDGRID_PASSWORD']
+        username = os.environ['SMTP_USERNAME']
+        password = os.environ['SMTP_PASSWORD']
     return username, password
 
 
 def send_email(to, attachment, title):
-    message = sendgrid.Mail()
-    message.add_to(to + '@kindle.com')
-    message.set_subject(title)
-    message.set_text(' ')
-    message.set_from('convert@reddit2kindle.com')
-    message.add_attachment_stream('{}.html'.format(title), attachment)
-    return sg.send(message)
+    msg = MIMEMultipart()
+    msg['From'] = 'convert@reddit2kindle.com'
+    msg['To'] = to + 'kindle.com'
+    msg['Subject'] = title
+
+    attach = MIMEText(attachment, 'html', 'utf8')
+    attach.add_header('Content-Disposition', 'attachment', filename=title)
+    msg.attach(attach)
+
+    s = smtplib.SMTP('smtp.mandrillapp.com', 587)
+
+    s.login(get_auth()[0], get_auth()[1])
+    s.send_message(msg)
+
+    s.quit()
 
 
 def validate_request(values):
@@ -51,8 +62,8 @@ def validate_request(values):
         return 'How am I supposed to send it to you without an email address?'
     return None
 
+
 r = praw.Reddit(user_agent='reddit2kindle')
-sg = sendgrid.SendGridClient(get_auth()[0], get_auth()[1])
 
 
 def get_posts(subreddit, time, limit):
