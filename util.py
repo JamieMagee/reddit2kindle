@@ -36,7 +36,7 @@ def get_auth():
 
 def send_email(to, attachment, title):
     message = sendgrid.Mail()
-    message.add_to(to)
+    message.add_to(to + '@kindle.com')
     message.set_subject(title)
     message.set_text(' ')
     message.set_from('reddit2kindle')
