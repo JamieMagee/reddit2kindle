@@ -40,7 +40,7 @@ def get_auth():
 def send_email(to, attachment, title):
     msg = MIMEMultipart()
     msg['From'] = 'convert@reddit2kindle.com'
-    msg['To'] = to + 'kindle.com'
+    msg['To'] = to + '@kindle.com'
     msg['Subject'] = title
 
     attach = MIMEText(attachment, 'html', 'utf8')
