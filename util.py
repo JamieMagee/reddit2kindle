@@ -37,6 +37,18 @@ def get_auth():
     return username, password
 
 
+def get_smtp():
+    if os.path.isfile(os.path.join(os.path.dirname(__file__), 'settings.cfg')):
+        config = ConfigParser()
+        config.read(os.path.join(os.path.dirname(__file__), 'settings.cfg'))
+        server = config.get('smtp', 'server')
+        port = config.get('smtp', 'port')
+    else:
+        server = os.environ['SMTP_SERVER']
+        port = os.environ['SMTP_PORT']
+    return server, port
+
+
 def send_email(to, attachment, title):
     msg = MIMEMultipart()
     msg['From'] = 'convert@reddit2kindle.com'
@@ -47,7 +59,7 @@ def send_email(to, attachment, title):
     attach.add_header('Content-Disposition', 'attachment', filename=title + '.html')
     msg.attach(attach)
 
-    s = smtplib.SMTP('smtp.mandrillapp.com', 587)
+    s = smtplib.SMTP(get_smtp()[0], get_smtp()[1])
 
     s.login(get_auth()[0], get_auth()[1])
     s.send_message(msg)
