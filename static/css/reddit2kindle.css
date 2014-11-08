@@ -9,17 +9,8 @@ p {
     margin: 30px 0;
 }
 
-p a {
-    text-decoration: underline;
-}
-
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-    font-weight: 800;
+h1 {
+    font-weight: 600;
 }
 
 a {
@@ -52,6 +43,10 @@ hr.small {
 }
 
 @media only screen and (min-width: 768px) {
+    h1 {
+        font-weight: 800;
+    }
+
     .navbar-custom {
         background: transparent;
         border-bottom: 1px solid transparent;
@@ -139,5 +134,5 @@ input,
 }
 
 button {
-    border-radius: 0!important;
+    border-radius: 0 !important;
 }
