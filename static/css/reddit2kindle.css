@@ -137,3 +137,7 @@ input,
 .input-group-addon {
     border-radius: 0 !important;
 }
+
+button {
+    border-radius: 0!important;
+}
