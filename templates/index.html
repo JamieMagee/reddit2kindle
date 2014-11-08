@@ -18,19 +18,7 @@
 
 
     <div class="container">
-        {% with messages = get_flashed_messages(with_categories=true) %}
-            {% if messages %}
-                {% for category, message in messages %}
-                    <div class="alert alert-{{ category }} alert-dismissible fade in" role="alert">
-                        <button type="button" class="close" data-dismiss="alert"><span
-                                aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                        {{ message }}
-                    </div>
-                {% endfor %}
-            {% endif %}
-        {% endwith %}
-
-        <form method="POST" action="{{ url_for('thread') }}">
+        <form id="single">
             <div class="row control-group">
                 <div class="form-group col-xs-12 floating-label-form-group controls">
                     <label for="submission">Submission URL</label>
@@ -49,9 +37,7 @@
                     </div>
                 </div>
             </div>
-            <button type="submit" class="btn btn-primary btn-lg
-            ">Submit
-            </button>
+            <button type="submit" class="btn btn-primary btn-lg" data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i> Converting...">Convert</button>
         </form>
     </div>
 

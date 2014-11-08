@@ -1,6 +1,6 @@
 import os
 
-from flask import Flask, request, redirect, url_for, flash
+from flask import Flask, request, jsonify
 from flask.templating import render_template
 
 import util
@@ -18,14 +18,12 @@ def index():
 @app.route('/thread', methods=['POST'])
 def thread():
     if util.validate_request(request.form) is not None:
-        flash(util.validate_request(request.form), 'danger')
-        return redirect(url_for('index', _external=True))
+        return jsonify(type='danger', text=util.validate_request(request.form))
 
     try:
         submission = util.r.get_submission(url=request.form['submission'])
     except:
-        flash('That wasn\'t a reddit link, was it?', 'danger')
-        return redirect(url_for('index', _external=True))
+        return jsonify(type='danger', text='That wasn\'t a reddit link, was it?')
     submission.replace_more_comments(limit=0)
 
     comments = util.get_comments(submission)
@@ -39,11 +37,9 @@ def thread():
     status = util.send_email(address, attachment, title)
 
     if status is None:
-        flash('Success!', 'success')
-        return redirect(url_for('index', _external=True))
+        return jsonify(type='success', text='Success!')
     else:
-        flash('Uh oh! Something went wrong on our end', 'warning')
-        return redirect(url_for('index', _external=True))
+        return jsonify(type='warning', text='Uh oh! Something went wrong on our end')
 
 
 @app.route('/top', methods=['POST'])
