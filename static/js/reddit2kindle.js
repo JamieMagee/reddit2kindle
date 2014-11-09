@@ -1,3 +1,13 @@
+var csrftoken = $('input[name=csrf_token]').attr('value');
+
+$.ajaxSetup({
+    beforeSend: function (xhr, settings) {
+        if (!/^(GET|HEAD|OPTIONS|TRACE)$/i.test(settings.type) && !this.crossDomain) {
+            xhr.setRequestHeader("X-CSRFToken", csrftoken)
+        }
+    }
+});
+
 $(function () {
     $('#single').submit(function (event) {
         event.preventDefault();
