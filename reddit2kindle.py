@@ -4,15 +4,18 @@ from flask import Flask, request, jsonify
 from flask.templating import render_template
 
 import util
+import forms
 
 
 app = Flask(__name__)
 app.secret_key = os.urandom(24)
+forms.csrf.init_app(app)
 
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    form = forms.Submission()
+    return render_template('index.html', form=form)
 
 
 @app.route('/thread', methods=['POST'])

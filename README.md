@@ -37,4 +37,3 @@ TODO
 ====
 * Fix UTF-8 weirdness with the Kindle converter
 * Add "Send top x posts from subreddit" feature
-* Use [WTForms](https://flask-wtf.readthedocs.org/en/latest/) to add CSRF protection
