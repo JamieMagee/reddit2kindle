@@ -58,6 +58,7 @@ target/
 settings.cfg
 web.config
 web.debug.config
+ptvs_virtualenv_proxy.py
 
 # =========================
 # Operating System Files
