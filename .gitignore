@@ -56,6 +56,8 @@ target/
 .idea
 
 settings.cfg
+web.config
+web.debug.config
 
 # =========================
 # Operating System Files
