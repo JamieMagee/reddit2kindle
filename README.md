@@ -35,5 +35,4 @@ You need to add reddit2kindle to your approved Kindle e-mail senders. To do this
 
 TODO
 ====
-* Fix UTF-8 weirdness with the Kindle converter
-* Add "Send top x posts from subreddit" feature
+* Fix UTF-8 weirdness with the Kindle converter (Amazon use ISO/IEC 8859-1)

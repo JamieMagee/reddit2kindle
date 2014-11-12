@@ -18,26 +18,98 @@
 
 
     <div class="container">
-        <form id="single">
-            {{ form.csrf_token }}
-            <div class="row control-group">
-                <div class="form-group col-xs-12 floating-label-form-group controls">
-                    {{ form.submission.label }}
-                    {{ form.submission(class="form-control", placeholder="https://www.reddit.com/comments/92dd8/test_post_please_ignore") }}
-                </div>
-            </div>
+        <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+            <div class="panel panel-default">
+                <a data-toggle="collapse" data-parent="#accordion" href="#collapsePost" aria-expanded="true"
+                   aria-controls="collapsePost">
+                    <div class="panel-heading with-marker" role="tab" id="headingPost">
+                        <h4 class="panel-title">
+                            <i class="fa fa-chevron-down"></i>
+                            Post
+                        </h4>
+                    </div>
+                </a>
 
-            <div class="row control-group">
-                <div class="form-group col-xs-12 floating-label-form-group controls">
-                    {{ form.email.label }}
-                    <div class="input-group">
-                        {{ form.email(class="form-control", placeholder="johnsmith") }}
-                        <span class="input-group-addon">@kindle.com</span>
+                <div id="collapsePost" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingPost">
+                    <div class="panel-body">
+                        <form id="post">
+                            {{ post.csrf_token }}
+                            <div class="row control-group">
+                                <div class="form-group col-xs-12 floating-label-form-group controls">
+                                    {{ post.submission.label }}
+                                    {{ post.submission(class="form-control", placeholder="https://www.reddit.com/comments/92dd8/test_post_please_ignore") }}
+                                </div>
+                            </div>
+                            <div class="row control-group">
+                                <div class="form-group col-xs-12 floating-label-form-group controls">
+                                    {{ post.email.label }}
+                                    <div class="input-group">
+                                        {{ post.email(class="form-control", placeholder="johnsmith") }}
+                                        <span class="input-group-addon">@kindle.com</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-primary btn-lg"
+                                    data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i> Converting...">
+                                Convert
+                            </button>
+                        </form>
                     </div>
                 </div>
             </div>
-            <button type="submit" class="btn btn-primary btn-lg" data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i> Converting...">Convert</button>
-        </form>
+            <div class="panel panel-default">
+                <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapeSubreddit"
+                   aria-expanded="false" aria-controls="collapeSubreddit">
+                    <div class="panel-heading with-marker" role="tab" id="headingSubreddit">
+                        <h4 class="panel-title">
+                            <i class="fa fa-chevron-up"></i>
+                            Subreddit
+                        </h4>
+                    </div>
+                </a>
+
+                <div id="collapeSubreddit" class="panel-collapse collapse" role="tabpanel"
+                     aria-labelledby="headingSubreddit">
+                    <div class="panel-body">
+                        <form id="subreddit">
+                            {{ subreddit.csrf_token }}
+                            <div class="row control-group">
+                                <div class="form-group col-xs-12 floating-label-form-group controls">
+                                    {{ subreddit.subreddit.label }}
+                                    {{ subreddit.subreddit(class="form-control", placeholder="AskReddit") }}
+                                </div>
+                            </div>
+                            <div class="row control-group">
+                                <div class="form-group col-xs-12 floating-label-form-group controls">
+                                    {{ subreddit.time.label }}
+                                    {{ subreddit.time(class="form-control", placeholder="all") }}
+                                </div>
+                            </div>
+                            <div class="row control-group">
+                                <div class="form-group col-xs-12 floating-label-form-group controls">
+                                    {{ subreddit.limit.label }}
+                                    {{ subreddit.limit(class="form-control", placeholder="10", type="number", min="0", max="25") }}
+                                </div>
+                            </div>
+                            <div class="row control-group">
+                                <div class="form-group col-xs-12 floating-label-form-group controls">
+                                    {{ post.email.label }}
+                                    <div class="input-group">
+                                        {{ post.email(class="form-control", placeholder="johnsmith") }}
+                                        <span class="input-group-addon">@kindle.com</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-primary btn-lg"
+                                    data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i> Converting...">
+                                Convert
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     </div>
 
 {% endblock %}

@@ -136,3 +136,20 @@ input,
 button {
     border-radius: 0 !important;
 }
+
+.panel-group > .panel {
+    border: 1px #eaeaea solid;
+    margin-bottom: 2px;
+    border-radius: 0;
+}
+
+.panel-group > .panel > a > .panel-heading {
+    display: block;
+    text-decoration: none;
+    background-color: #eeeeee;
+    padding: 10px 20px;
+    width: 100%;
+    position: relative;
+    color: #1d1d1d;
+}
+

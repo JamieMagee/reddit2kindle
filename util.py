@@ -67,9 +67,21 @@ def send_email(to, attachment, title):
     s.quit()
 
 
-def validate_request(values):
+def validate_request_post(values):
     if values['submission'] is '':
         return 'You need to put a URL in!'
+    if values['email'] is '':
+        return 'How am I supposed to send it to you without an email address?'
+    return None
+
+def validate_request_subreddit(values):
+    if values['subreddit'] is '':
+        return 'I need a subreddit name!'
+    try:
+        if values['limit'] is '' and 0 < int(values['limit']) < 25:
+            return 'How many posts would you like?'
+    except ValueError:
+        return 'How many posts would you like?'
     if values['email'] is '':
         return 'How am I supposed to send it to you without an email address?'
     return None
@@ -80,14 +92,14 @@ r = praw.Reddit(user_agent='reddit2kindle')
 
 def get_posts(subreddit, time, limit):
     if time == 'hour':
-        return subreddit.get_top_from_hour(limit=limit)
+        return r.get_subreddit(subreddit).get_top_from_hour(limit=limit)
     elif time == 'day':
-        return subreddit.get_top_from_day(limit=limit)
+        return r.get_subreddit(subreddit).get_top_from_day(limit=limit)
     elif time == 'week':
-        return subreddit.get_top_from_week(limit=limit)
+        return r.get_subreddit(subreddit).get_top_from_week(limit=limit)
     elif time == 'month':
-        return subreddit.get_top_from_month(limit=limit)
+        return r.get_subreddit(subreddit).get_top_from_month(limit=limit)
     elif time == 'year':
-        return subreddit.get_top_from_year(limit=limit)
+        return r.get_subreddit(subreddit).get_top_from_year(limit=limit)
     elif time == 'all':
-        return subreddit.get_top_from_all(limit=limit)
+        return r.get_subreddit(subreddit).get_top_from_all(limit=limit)
