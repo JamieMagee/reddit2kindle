@@ -5,7 +5,7 @@ A web app to convert a reddit post and comments into an e-book, and send it dire
 
 Now you can read your favourite subreddits from the comfort of your e-reader. Here is a preview of the web app and the output it produces
 
-![Web app](https://i.imgur.com/T3bagbw.png)
+![Web app](https://i.imgur.com/VjUKtUG.png)
 
 ![Output](http://i.imgur.com/u5Vpkpq.png)
 
