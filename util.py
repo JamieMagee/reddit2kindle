@@ -55,7 +55,7 @@ def send_email(to, attachment, title):
     msg['To'] = to + '@kindle.com'
     msg['Subject'] = title
 
-    attach = MIMEText(attachment, 'html', 'utf8')
+    attach = MIMEText(attachment.encode('iso-8859-1', 'xmlcharrefreplace'), 'html', 'iso-8859-1')
     attach.add_header('Content-Disposition', 'attachment', filename=title + '.html')
     msg.attach(attach)
 
@@ -73,6 +73,7 @@ def validate_request_post(values):
     if values['email'] is '':
         return 'How am I supposed to send it to you without an email address?'
     return None
+
 
 def validate_request_subreddit(values):
     if values['subreddit'] is '':

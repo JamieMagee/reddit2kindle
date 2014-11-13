@@ -53,7 +53,6 @@ $(document).ready(function () {
             }
         })
             .done(function (data) {
-                console.log(data);
                 $(':submit').button('reset');
                 $('.container:last')
                     .prepend(
