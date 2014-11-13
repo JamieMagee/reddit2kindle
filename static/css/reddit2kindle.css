@@ -153,3 +153,11 @@ button {
     color: #1d1d1d;
 }
 
+.alert {
+    margin-bottom: 0;
+}
+
+.alert h4 {
+    margin-top: 10px !important;
+}
+

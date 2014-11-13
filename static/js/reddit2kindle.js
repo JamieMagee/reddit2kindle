@@ -16,20 +16,9 @@ $(document).ready(function () {
         })
             .done(function (data) {
                 $(':submit').button('reset');
-                $('.container:last')
-                    .prepend(
-                        '<div class="alert alert-' + data.type + ' alert-dismissible fade in" role="alert">\
-                        <button type="button" class="close" data-dismiss="alert">\
-                            <span\
-                            aria-hidden="true">&times;</span>\
-                            <span class="sr-only">Close</span>\
-                        </button>\
-                        ' + data.text + '\
-                    </div>'
-                );
-                window.setTimeout(function () {
-                    $(".alert:first").alert('close');
-                }, 10000);
+                $('.modal-text').text(data.text);
+                $('.modal-body').removeClass().addClass('modal-body alert alert-' + data.type);
+                $('#message').modal('show');
                 if (data.type == 'success') {
                     $('#post')[0].reset();
                 }
@@ -54,20 +43,9 @@ $(document).ready(function () {
         })
             .done(function (data) {
                 $(':submit').button('reset');
-                $('.container:last')
-                    .prepend(
-                        '<div class="alert alert-' + data.type + ' alert-dismissible fade in" role="alert">\
-                        <button type="button" class="close" data-dismiss="alert">\
-                            <span\
-                            aria-hidden="true">&times;</span>\
-                            <span class="sr-only">Close</span>\
-                        </button>\
-                        ' + data.text + '\
-                    </div>'
-                );
-                window.setTimeout(function () {
-                    $(".alert:first").alert('close');
-                }, 10000);
+                $('.modal-text').text(data.text);
+                $('.modal-body').removeClass().addClass('modal-body alert alert-' + data.type);
+                $('#message').modal('show');
                 if (data.type == 'success') {
                     $('#subreddit')[0].reset();
                 }
@@ -77,6 +55,5 @@ $(document).ready(function () {
     $('.collapse').on('show.bs.collapse hide.bs.collapse', function (n) {
         $(n.target).siblings('.panel-heading').find('a i').toggleClass('fa-chevron-up fa-chevron-down');
     });
-})
-;
+});
 

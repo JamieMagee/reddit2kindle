@@ -58,16 +58,15 @@ def convert():
 
     try:
         posts = util.get_posts(subreddit, time, limit)
+        if time == 'all':
+            title = 'Top ' + str(limit) + ' posts from /r/' + subreddit + ' ever'
+        else:
+            title = 'Top ' + str(limit) + ' posts from /r/' + subreddit + ' over the past ' + time
+        top = []
+        for post in posts:
+            top.append({'title': post.title, 'body': util.markdown(post.selftext), 'author': post.author.name})
     except:
-        return jsonify(type='danger', text='That wasn\'t a subreddit, was it?')
-
-    if time == 'all':
-        title = 'Top ' + str(limit) + ' posts from /r/' + subreddit + ' ever'
-    else:
-        title = 'Top ' + str(limit) + ' posts from /r/' + subreddit + ' over the past ' + time
-    top = []
-    for post in posts:
-        top.append({'title': post.title, 'body': util.markdown(post.selftext), 'author': post.author.name})
+        return jsonify(type='danger', text='That ain\'t no subreddit I\'ve ever heard of!')
 
     attachment = render_template('posts.html', posts=top)
 
