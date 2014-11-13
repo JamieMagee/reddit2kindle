@@ -32,7 +32,3 @@ You need to add reddit2kindle to your approved Kindle e-mail senders. To do this
 2. Go to "Your Account", select "Manage Your Content and Devices" and then select "Personal Document Settings".
 3. Under "Approved Personal Document E-mail List" click on "Add a new approved e-mail address".
 4. Add "convert@reddit2kindle.com" and select "Add Address".
-
-TODO
-====
-* Fix UTF-8 weirdness with the Kindle converter (Amazon use ISO/IEC 8859-1)
