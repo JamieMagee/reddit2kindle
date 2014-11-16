@@ -148,6 +148,11 @@ button {
     margin-top: 10px !important;
 }
 
-span.avoidwrap {
-    display: inline-block;
+.input-group-btn select {
+    border-color: #ccc;
+}
+
+.btn{
+    padding: 5.5px 12px;
+    border-radius: 0;
 }

@@ -49,10 +49,13 @@ def get_smtp():
     return server, port
 
 
-def send_email(to, attachment, title):
+def send_email(to, kindle_address, attachment, title):
     msg = MIMEMultipart()
     msg['From'] = 'convert@reddit2kindle.com'
-    msg['To'] = to + '@kindle.com'
+    if kindle_address == 'free':
+        msg['To'] = to + '@free.kindle.com'
+    else:
+        msg['To'] = to + '@kindle.com'
     msg['Subject'] = title
 
     attach = MIMEText(attachment.encode('iso-8859-1', 'xmlcharrefreplace'), 'html', 'iso-8859-1')
@@ -72,23 +75,26 @@ def validate_request_post(values):
         return 'You need to put a URL in!'
     if values['email'] is '':
         return 'How am I supposed to send it to you without an email address?'
+    if values['kindle_address'] not in ['free', 'normal']:
+        return 'Which kindle address do you want me to send to?'
     return None
 
 
 def validate_request_subreddit(values):
     if values['subreddit'] is '':
         return 'I need a subreddit name!'
+    if values['time'] not in ['all', 'year', 'month', 'week', 'day', 'hour']:
+        return 'That\'s not a valid time period, is it?'
     try:
-        if values['limit'] is '' and 0 < int(values['limit']) < 25:
+        if values['limit'] is '' or 0 > int(values['limit']) or int(values['limit']) > 25:
             return 'How many posts would you like?'
     except ValueError:
         return 'How many posts would you like?'
     if values['email'] is '':
         return 'How am I supposed to send it to you without an email address?'
+    if values['kindle_address'] not in ['free', 'normal']:
+        return 'Which kindle address do you want me to send to?'
     return None
-
-
-r = praw.Reddit(user_agent='reddit2kindle')
 
 
 def get_posts(subreddit, time, limit):
@@ -104,3 +110,5 @@ def get_posts(subreddit, time, limit):
         return r.get_subreddit(subreddit).get_top_from_year(limit=limit)
     elif time == 'all':
         return r.get_subreddit(subreddit).get_top_from_all(limit=limit)
+
+r = praw.Reddit(user_agent='reddit2kindle')

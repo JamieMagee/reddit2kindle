@@ -35,10 +35,11 @@ def thread():
     title = submission.title
     author = submission.author.name
     address = request.form['email']
+    kindle_address = request.form['kindle_address']
 
     attachment = render_template('comments.html', title=title, body=body, author=author, comments=comments)
 
-    status = util.send_email(address, attachment, title)
+    status = util.send_email(address, kindle_address, attachment, title)
 
     if status is None:
         return jsonify(type='success', text='Success!')
@@ -55,6 +56,7 @@ def convert():
     time = request.form['time']
     limit = int(request.form['limit'])
     address = request.form['email']
+    kindle_address = request.form['kindle_address']
 
     try:
         posts = util.get_posts(subreddit, time, limit)
@@ -70,7 +72,7 @@ def convert():
 
     attachment = render_template('posts.html', posts=top)
 
-    status = util.send_email(address, attachment, title)
+    status = util.send_email(address, kindle_address, attachment, title)
 
     if status is None:
         return jsonify(type='success', text='Success!')

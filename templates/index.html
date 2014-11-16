@@ -56,7 +56,7 @@
                                     {{ post.email.label }}
                                     <div class="input-group">
                                         {{ post.email(class="form-control", placeholder="johnsmith") }}
-                                        <span class="input-group-addon">@kindle.com</span>
+                                        <div class="input-group-btn">{{ subreddit.kindle_address(class="btn") }}</div>
                                     </div>
                                 </div>
                             </div>
@@ -107,7 +107,7 @@
                                     {{ post.email.label }}
                                     <div class="input-group">
                                         {{ post.email(class="form-control", placeholder="johnsmith") }}
-                                        <span class="input-group-addon">@kindle.com</span>
+                                        <div class="input-group-btn">{{ post.kindle_address(class="btn") }}</div>
                                     </div>
                                 </div>
                             </div>

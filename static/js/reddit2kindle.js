@@ -7,7 +7,8 @@ $(document).ready(function () {
             url: '/thread',
             data: {
                 submission: $('input[name="submission"]').val(),
-                email: $('input[name="email"]:first').val()
+                email: $('input[name="email"]:first').val(),
+                kindle_address: $('select[name="kindle_address"]:first').val()
             },
             type: 'POST',
             beforeSend: function (xhr) {
@@ -32,9 +33,10 @@ $(document).ready(function () {
             url: '/subreddit',
             data: {
                 subreddit: $('input[name="subreddit"]').val(),
-                time: $('select').val(),
+                time: $('select[name="time"]').val(),
                 limit: $('input[name="limit"]').val(),
-                email: $('input[name="email"]:last').val()
+                email: $('input[name="email"]:last').val(),
+                kindle_address: $('select[name="kindle_address"]:last').val()
             },
             type: 'POST',
             beforeSend: function (xhr) {
