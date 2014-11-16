@@ -1,7 +1,13 @@
 $(document).ready(function () {
 
+    var storage = window.localStorage;
+    if (storage.email) {
+        $('input[name="email"]').val(storage.email);
+    }
+
     $('#post').submit(function (event) {
         event.preventDefault();
+        storage.email = $('input[name="email"]').val();
         $(':submit').button('loading');
         $.ajax({
             url: '/thread',
@@ -22,12 +28,14 @@ $(document).ready(function () {
                 $('#message').modal('show');
                 if (data.type == 'success') {
                     $('#post')[0].reset();
+                    $('input[name="email"]').val(storage.email)
                 }
             });
     });
 
     $('#subreddit').submit(function (event) {
         event.preventDefault();
+        storage.email = $('input[name="email"]').val();
         $(':submit').button('loading');
         $.ajax({
             url: '/subreddit',
@@ -50,12 +58,13 @@ $(document).ready(function () {
                 $('#message').modal('show');
                 if (data.type == 'success') {
                     $('#subreddit')[0].reset();
+                    $('input[name="email"]').val(storage.email)
                 }
             });
     });
 
     $('.collapse').on('show.bs.collapse hide.bs.collapse', function (n) {
-        $(n.target).siblings('.panel-heading').find('a i').toggleClass('fa-chevron-up fa-chevron-down');
+        $(n.target).siblings('a').find('div h4 i').toggleClass('fa-chevron-up fa-chevron-down');
     });
 });
 
