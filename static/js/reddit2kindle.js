@@ -13,6 +13,7 @@ $(document).ready(function () {
             url: '/thread',
             data: {
                 submission: $('input[name="submission"]').val(),
+                comments: $('input[type="checkbox"]:first').prop('checked'),
                 email: $('input[name="email"]:first').val(),
                 kindle_address: $('select[name="kindle_address"]:first').val()
             },

@@ -28,9 +28,12 @@ def thread():
         submission = util.r.get_submission(url=request.form['submission'])
     except:
         return jsonify(type='danger', text='That wasn\'t a reddit link, was it?')
-    submission.replace_more_comments(limit=0)
 
-    comments = util.get_comments(submission)
+    comments = None
+    if request.form['comments'] == 'true':
+        submission.replace_more_comments(limit=0)
+        comments = util.get_comments(submission)
+
     body = util.markdown(submission.selftext, output_format='html5')
     title = submission.title
     author = submission.author.name

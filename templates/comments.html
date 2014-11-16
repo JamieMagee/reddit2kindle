@@ -109,7 +109,9 @@
         </div>
     {% endif %}
 
-    {{ comments|safe }}
+    {% if comments %}
+        {{ comments|safe }}
+    {% endif %}
 
 </div>
 </body>

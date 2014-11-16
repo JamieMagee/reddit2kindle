@@ -156,3 +156,8 @@ button {
     padding: 5.5px 12px;
     border-radius: 0;
 }
+
+input[type=checkbox] {
+    transform: scale(2);
+    margin-left: 6px
+}
