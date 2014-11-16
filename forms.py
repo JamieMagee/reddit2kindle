@@ -8,7 +8,7 @@ csrf = CsrfProtect()
 class Submission(Form):
     submission = StringField('Submission URL')
     email = StringField('Kindle email address')
-    kindle_address = SelectField('Kindle address', choices=[('free', '@free.kindle.com'), ('normal', '@kindle.com')])
+    kindle_address = SelectField('Kindle address', choices=[('normal', '@kindle.com'), ('free', '@free.kindle.com')])
 
 
 class Subreddit(Form):
@@ -18,4 +18,4 @@ class Subreddit(Form):
                                 ('hour', 'hour')])
     limit = IntegerField('Number of posts')
     email = StringField('Kindle email address')
-    kindle_address = SelectField('Kindle address', choices=[('free', '@free.kindle.com'), ('normal', '@kindle.com')])
+    kindle_address = SelectField('Kindle address', choices=[('normal', '@kindle.com'), ('free', '@free.kindle.com')])
