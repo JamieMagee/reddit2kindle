@@ -161,3 +161,21 @@ input[type=checkbox] {
     transform: scale(2);
     margin-left: 6px
 }
+
+#google-plus > a:hover {
+  background-color: #D34836;
+  background-image: none;
+  filter: none;
+}
+
+#facebook > a:hover {
+  background-color: #3b5998;
+  background-image: none;
+  filter: none;
+}
+
+#twitter > a:hover {
+  background-color: #00aced;
+  background-image: none;
+  filter: none;
+}
