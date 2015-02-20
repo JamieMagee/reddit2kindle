@@ -3,6 +3,7 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 import os
 from configparser import ConfigParser
+import requests
 
 import praw
 from markdown import markdown
@@ -49,6 +50,16 @@ def get_smtp():
     return server, port
 
 
+def get_readability_token():
+    if os.path.isfile(os.path.join(os.path.dirname(__file__), 'settings.cfg')):
+        config = ConfigParser()
+        config.read(os.path.join(os.path.dirname(__file__), 'settings.cfg'))
+        token = config.get('readability', 'token')
+    else:
+        token = os.environ['READABILITY_TOKEN']
+    return token
+
+
 def send_email(to, kindle_address, attachment, title):
     msg = MIMEMultipart()
     msg['From'] = 'convert@reddit2kindle.com'
@@ -59,7 +70,8 @@ def send_email(to, kindle_address, attachment, title):
     msg['Subject'] = title
 
     attach = MIMEText(attachment.encode('iso-8859-1', 'xmlcharrefreplace'), 'html', 'iso-8859-1')
-    attach.add_header('Content-Disposition', 'attachment', filename=title + '.html')
+    attach.add_header('Content-Disposition', 'attachment',
+                      filename="".join(c for c in title if c.isalnum() or c in ['-', '_', ',', ' ']).rstrip() + '.html')
     msg.attach(attach)
 
     s = smtplib.SMTP(get_smtp()[0], get_smtp()[1])
@@ -110,5 +122,10 @@ def get_posts(subreddit, time, limit):
         return r.get_subreddit(subreddit).get_top_from_year(limit=limit)
     elif time == 'all':
         return r.get_subreddit(subreddit).get_top_from_all(limit=limit)
+
+def get_readability(url):
+    request = requests.get(
+        'https://readability.com/api/content/v1/parser?url=' + url + '&token=' + get_readability_token())
+    return request.json()['content']
 
 r = praw.Reddit(user_agent='reddit2kindle')

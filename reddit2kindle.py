@@ -34,7 +34,10 @@ def thread():
         submission.replace_more_comments(limit=0)
         comments = util.get_comments(submission)
 
-    body = util.markdown(submission.selftext, output_format='html5')
+    if submission.selftext == '':
+        body = util.get_readability(submission.url)
+    else:
+        body = util.markdown(submission.selftext, output_format='html5')
     title = submission.title
     author = submission.author.name
     address = request.form['email']
