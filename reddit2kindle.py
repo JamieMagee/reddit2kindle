@@ -72,7 +72,9 @@ def convert():
             title = 'Top ' + str(limit) + ' posts from /r/' + subreddit + ' over the past ' + time
         top = []
         for post in posts:
-            top.append({'title': post.title, 'body': util.markdown(post.selftext), 'author': post.author.name})
+            top.append({'title': post.title,
+                        'body': util.get_readability(post.url) if post.selftext == '' else util.markdown(post.selftext),
+                        'author': post.author.name})
     except:
         return jsonify(type='danger', text='That ain\'t no subreddit I\'ve ever heard of!')
 
