@@ -71,7 +71,7 @@ def send_email(to, kindle_address, attachment, title):
 
     attach = MIMEText(attachment.encode('iso-8859-1', 'xmlcharrefreplace'), 'html', 'iso-8859-1')
     attach.add_header('Content-Disposition', 'attachment',
-                      filename="".join(c for c in title if c.isalnum() or c in ['-', '_', ',', ' ']).rstrip() + '.html')
+                      filename="".join(c for c in title if c.isalnum() or c in ['-', '_', ',', ' ', '/']).rstrip() + '.html')
     msg.attach(attach)
 
     s = smtplib.SMTP(get_smtp()[0], get_smtp()[1])
