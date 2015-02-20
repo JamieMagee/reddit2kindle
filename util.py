@@ -4,6 +4,7 @@ from email.mime.text import MIMEText
 import os
 from configparser import ConfigParser
 import requests
+import re
 
 import praw
 from markdown import markdown
@@ -126,6 +127,7 @@ def get_posts(subreddit, time, limit):
 def get_readability(url):
     request = requests.get(
         'https://readability.com/api/content/v1/parser?url=' + url + '&token=' + get_readability_token())
-    return request.json()['content']
+    p = re.compile(r'<img.*?>')
+    return p.sub('', request.json()['content'])
 
 r = praw.Reddit(user_agent='reddit2kindle')
