@@ -4,10 +4,14 @@ $(document).ready(function () {
     if (storage.email) {
         $('input[name="email"]').val(storage.email);
     }
+    if (storage.kindle_address) {
+        $('select[name="kindle_address"]').val(storage.kindle_address);
+    }
 
     $('#post').submit(function (event) {
         event.preventDefault();
-        storage.email = $('input[name="email"]').val();
+        storage.email = $('input[name="email"]:first').val();
+        storage.kindle_address = $('select[name="kindle_address"]:first').val();
         $(':submit').button('loading');
         $.ajax({
             url: '/thread',
@@ -29,14 +33,16 @@ $(document).ready(function () {
                 $('#message').modal('show');
                 if (data.type == 'success') {
                     $('#post')[0].reset();
-                    $('input[name="email"]').val(storage.email)
+                    $('input[name="email"]').val(storage.email);
+                    $('select[name="kindle_address"]').val(storage.kindle_address);
                 }
             });
     });
 
     $('#subreddit').submit(function (event) {
         event.preventDefault();
-        storage.email = $('input[name="email"]').val();
+        storage.email = $('input[name="email"]:last').val();
+        storage.kindle_address = $('select[name="kindle_address"]:last').val();
         $(':submit').button('loading');
         $.ajax({
             url: '/subreddit',
@@ -59,7 +65,8 @@ $(document).ready(function () {
                 $('#message').modal('show');
                 if (data.type == 'success') {
                     $('#subreddit')[0].reset();
-                    $('input[name="email"]').val(storage.email)
+                    $('input[name="email"]').val(storage.email);
+                    $('select[name="kindle_address"]').val(storage.kindle_address);
                 }
             });
     });
