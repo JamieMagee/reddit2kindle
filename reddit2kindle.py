@@ -72,10 +72,13 @@ def convert():
             title = 'Top ' + str(limit) + ' posts from /r/' + subreddit + ' over the past ' + time
         top = []
         for post in posts:
-            top.append({'title': post.title,
+            try:
+                top.append({'title': post.title,
                         'body': util.get_readability(post.url) if post.selftext == '' else util.markdown(post.selftext),
-                        'author': post.author.name})
-    except:
+                        'author': '[deleted]' if post.author is None else post.author.name })
+            except:
+                pass
+    except Exception as e:
         return jsonify(type='danger', text='That ain\'t no subreddit I\'ve ever heard of!')
 
     attachment = render_template('posts.html', posts=top)
