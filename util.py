@@ -128,6 +128,9 @@ def get_readability(url):
     request = requests.get(
         'https://readability.com/api/content/v1/parser?url=' + url + '&token=' + get_readability_token())
     p = re.compile(r'<img.*?>')
-    return p.sub('', request.json()['content'])
+    try:
+        return p.sub('', request.json()['content'])
+    except:
+        return ''
 
 r = praw.Reddit(user_agent='reddit2kindle')
