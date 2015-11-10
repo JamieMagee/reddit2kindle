@@ -78,7 +78,7 @@ def convert():
                         'author': '[deleted]' if post.author is None else post.author.name })
             except:
                 pass
-    except Exception as e:
+    except:
         return jsonify(type='danger', text='That ain\'t no subreddit I\'ve ever heard of!')
 
     attachment = render_template('posts.html', posts=top)
