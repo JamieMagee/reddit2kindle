@@ -1,4 +1,4 @@
-reddit2kindle
+reddit2kindle [![Requirements Status](https://requires.io/github/JamieMagee/reddit2kindle/requirements.svg?branch=master)](https://requires.io/github/JamieMagee/reddit2kindle/requirements/?branch=master)
 =============
 
 A web app to convert a reddit post and comments into an e-book, and send it directly to your kindle device or app
