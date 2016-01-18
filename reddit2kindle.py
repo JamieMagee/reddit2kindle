@@ -40,7 +40,7 @@ def thread():
         body = util.markdown(submission.selftext, output_format='html5')
     title = submission.title
     author = "[deleted]"
-    if submission.author.name is not None:
+    if submission.author is not None:
         author = submission.author.name
     address = request.form['email']
     kindle_address = request.form['kindle_address']
