@@ -1,6 +1,6 @@
 from flask_wtf import Form
-from wtforms import StringField, IntegerField, SelectField, BooleanField
 from flask_wtf.csrf import CsrfProtect
+from wtforms import StringField, IntegerField, SelectField, BooleanField
 
 csrf = CsrfProtect()
 
@@ -8,6 +8,7 @@ csrf = CsrfProtect()
 class Submission(Form):
     submission = StringField('Submission URL')
     comments = BooleanField('Include comments')
+    comments_style = SelectField('Comments style', choices=[('quotes', 'quotes'), ('numbers', 'numbers')])
     email = StringField('Kindle email address')
     kindle_address = SelectField('Kindle address', choices=[('normal', '@kindle.com'), ('free', '@free.kindle.com')])
 

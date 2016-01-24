@@ -51,12 +51,17 @@
                                     {{ post.submission(class="form-control", placeholder="https://www.reddit.com/comments/92dd8/test_post_please_ignore") }}
                                 </div>
                             </div>
-                            <div class="row control-group">
-                                <div class="form-group col-xs-12 floating-label-form-group controls">
+                            <div class="row control-group comments">
+                                <div class="form-group col-xs-6 floating-label-form-group controls">
                                     {{ post.comments.label }}
                                     {{ post.comments(class="checkbox", checked="checked") }}
                                 </div>
+                                <div class="form-group col-xs-6 floating-label-form-group controls">
+                                    {{ post.comments_style.label }}
+                                    {{ post.comments_style(class="btn") }}
+                                </div>
                             </div>
+
                             <div class="row control-group">
                                 <div class="form-group col-xs-12 floating-label-form-group controls">
                                     {{ post.email.label }}

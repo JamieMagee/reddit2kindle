@@ -1,30 +1,42 @@
+import os
+import re
 import smtplib
+from configparser import ConfigParser
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
-import os
-from configparser import ConfigParser
-import requests
-import re
 
 import praw
+import requests
 from markdown import markdown
 
 
-def to_html(comment):
+def to_html_numbers(comment):
     result = markdown(comment.body) + '<footer>' + comment.author.name + '</footer>'
-    children = ['<blockquote>' + to_html(reply) + '</blockquote>' for reply in comment.replies if
+    children = ['<li>' + to_html_numbers(reply) + '</li>' for reply in comment.replies if
+                reply.author is not None]
+    if children:
+        result += '<ol>' + ''.join(children) + '</ol>'
+    return result
+
+
+def to_html_quotes(comment):
+    result = markdown(comment.body) + '<footer>' + comment.author.name + '</footer>'
+    children = ['<blockquote>' + to_html_quotes(reply) + '</blockquote>' for reply in comment.replies if
                 reply.author is not None]
     if children:
         result += ''.join(children)
     return result
 
 
-def get_comments(submission):
-    out = ''
+def get_comments(submission, comments_style):
+    out = '<ol>' if comments_style == 'numbers' else ''
     for comment in submission.comments:
         if comment.author is not None:
-            out += '<blockquote>' + to_html(comment) + '</blockquote>'
-    return out
+            if comments_style == 'numbers':
+                out += '<li>' + to_html_numbers(comment) + '</li>'
+            else:
+                out += '<blockquote>' + to_html_quotes(comment) + '</blockquote>'
+    return out + ('</ol>' if comments_style == 'numbers' else '')
 
 
 def get_auth():
@@ -72,7 +84,8 @@ def send_email(to, kindle_address, attachment, title):
 
     attach = MIMEText(attachment.encode('iso-8859-1', 'xmlcharrefreplace'), 'html', 'iso-8859-1')
     attach.add_header('Content-Disposition', 'attachment',
-                      filename="".join(c for c in title if c.isalnum() or c in ['-', '_', ',', ' ', '/']).rstrip() + '.html')
+                      filename="".join(
+                              c for c in title if c.isalnum() or c in ['-', '_', ',', ' ', '/']).rstrip() + '.html')
     msg.attach(attach)
 
     s = smtplib.SMTP(get_smtp()[0], get_smtp()[1])
@@ -124,13 +137,15 @@ def get_posts(subreddit, time, limit):
     elif time == 'all':
         return r.get_subreddit(subreddit).get_top_from_all(limit=limit)
 
+
 def get_readability(url):
     request = requests.get(
-        'https://readability.com/api/content/v1/parser?url=' + url + '&token=' + get_readability_token())
+            'https://readability.com/api/content/v1/parser?url=' + url + '&token=' + get_readability_token())
     p = re.compile(r'<img.*?>')
     try:
         return p.sub('', request.json()['content'])
     except:
         return ''
+
 
 r = praw.Reddit(user_agent='reddit2kindle')

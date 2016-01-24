@@ -3,9 +3,8 @@ import os
 from flask import Flask, request, jsonify
 from flask.templating import render_template
 
-import util
 import forms
-
+import util
 
 app = Flask(__name__)
 app.secret_key = os.urandom(24)
@@ -32,7 +31,7 @@ def thread():
     comments = None
     if request.form['comments'] == 'true':
         submission.replace_more_comments(limit=0)
-        comments = util.get_comments(submission)
+        comments = util.get_comments(submission, request.form['comments_style'])
 
     if submission.selftext == '':
         body = util.get_readability(submission.url)
@@ -45,7 +44,7 @@ def thread():
     address = request.form['email']
     kindle_address = request.form['kindle_address']
 
-    attachment = render_template('comments.html', title=title, body=body, author=author, comments=comments)
+    return render_template('comments.html', title=title, body=body, author=author, comments=comments)
 
     status = util.send_email(address, kindle_address, attachment, title)
 
@@ -76,8 +75,9 @@ def convert():
         for post in posts:
             try:
                 top.append({'title': post.title,
-                        'body': util.get_readability(post.url) if post.selftext == '' else util.markdown(post.selftext),
-                        'author': '[deleted]' if post.author is None else post.author.name })
+                            'body': util.get_readability(post.url) if post.selftext == '' else util.markdown(
+                                    post.selftext),
+                            'author': '[deleted]' if post.author is None else post.author.name})
             except:
                 pass
     except:

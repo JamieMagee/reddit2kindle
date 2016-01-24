@@ -115,11 +115,6 @@ hr.small {
     }
 }
 
-input,
-.input-group-addon {
-    border-radius: 0 !important;
-}
-
 button {
     border-radius: 0 !important;
 }
@@ -152,7 +147,7 @@ button {
     border-color: #ccc;
 }
 
-.btn{
+.btn {
     padding: 5.5px 12px;
     border-radius: 0;
 }
@@ -163,19 +158,28 @@ input[type=checkbox] {
 }
 
 #google-plus > a:hover {
-  background-color: #D34836;
-  background-image: none;
-  filter: none;
+    background: #D34836 none;
+    filter: none;
 }
 
 #facebook > a:hover {
-  background-color: #3b5998;
-  background-image: none;
-  filter: none;
+    background: #3b5998 none;
+    filter: none;
 }
 
 #twitter > a:hover {
-  background-color: #00aced;
-  background-image: none;
-  filter: none;
+    background: #00aced none;
+    filter: none;
+}
+
+.form-control {
+    border-radius: 0;
+}
+
+.comments {
+    display: inline-block;
+}
+
+#comments_style {
+    border: 1px solid #ccc
 }
