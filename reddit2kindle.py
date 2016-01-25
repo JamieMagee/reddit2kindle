@@ -44,7 +44,7 @@ def thread():
     address = request.form['email']
     kindle_address = request.form['kindle_address']
 
-    return render_template('comments.html', title=title, body=body, author=author, comments=comments)
+    attachment = render_template('comments.html', title=title, body=body, author=author, comments=comments)
 
     status = util.send_email(address, kindle_address, attachment, title)
 
