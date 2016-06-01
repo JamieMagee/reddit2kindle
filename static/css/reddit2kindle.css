@@ -143,6 +143,10 @@ button {
     margin-top: 10px !important;
 }
 
+#about {
+    margin-bottom: 20px;
+}
+
 .input-group-btn select {
     border-color: #ccc;
 }

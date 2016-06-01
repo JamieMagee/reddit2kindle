@@ -7,6 +7,9 @@ $(document).ready(function () {
     if (storage.kindle_address) {
         $('select[name="kindle_address"]').val(storage.kindle_address);
     }
+    if (!storage.email && !storage.kindle_address) {
+        $('#about').removeClass('hidden');
+    }
 
     $('#post').submit(function (event) {
         event.preventDefault();
