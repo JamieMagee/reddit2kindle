@@ -80,12 +80,12 @@ def send_email(to, kindle_address, attachment, title):
         msg['To'] = to + '@free.kindle.com'
     else:
         msg['To'] = to + '@kindle.com'
+    title = "".join(c for c in title if c.isalnum() or c.isspace()).rstrip()
     msg['Subject'] = title
 
     attach = MIMEText(attachment.encode('iso-8859-1', 'xmlcharrefreplace'), 'html', 'iso-8859-1')
     attach.add_header('Content-Disposition', 'attachment',
-                      filename="".join(
-                              c for c in title if c.isalnum() or c in ['-', '_', ',', ' ', '/']).rstrip() + '.html')
+                      filename=title + '.html')
     msg.attach(attach)
 
     s = smtplib.SMTP(get_smtp()[0], get_smtp()[1])
@@ -140,7 +140,7 @@ def get_posts(subreddit, time, limit):
 
 def get_readability(url):
     request = requests.get(
-            'https://readability.com/api/content/v1/parser?url=' + url + '&token=' + get_readability_token())
+        'https://readability.com/api/content/v1/parser?url=' + url + '&token=' + get_readability_token())
     p = re.compile(r'<img.*?>')
     try:
         return p.sub('', request.json()['content'])
