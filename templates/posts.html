@@ -109,6 +109,9 @@
                 {{ post.body|safe }}
             </div>
         {% endif %}
+        {% if post.comments %}
+            {{ post.comments|safe }}
+        {% endif %}
     </div>
 {% endfor %}
 </body>

@@ -15,6 +15,8 @@ class Submission(Form):
 
 class Subreddit(Form):
     subreddit = StringField('Subreddit')
+    comments = BooleanField('Include comments')
+    comments_style = SelectField('Comments style', choices=[('quotes', 'quotes'), ('numbers', 'numbers')])
     time = SelectField('Time period',
                        choices=[('all', 'all'), ('year', 'year'), ('month', 'month'), ('week', 'week'), ('day', 'day'),
                                 ('hour', 'hour')])

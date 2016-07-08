@@ -112,6 +112,16 @@
                                     {{ subreddit.subreddit(class="form-control", placeholder="AskReddit") }}
                                 </div>
                             </div>
+                            <div class="row control-group comments">
+                                <div class="form-group col-xs-6 floating-label-form-group controls">
+                                    {{ post.comments.label }}
+                                    {{ post.comments(class="checkbox", checked="checked") }}
+                                </div>
+                                <div class="form-group col-xs-6 floating-label-form-group controls">
+                                    {{ post.comments_style.label }}
+                                    {{ post.comments_style(class="btn") }}
+                                </div>
+                            </div>
                             <div class="row control-group">
                                 <div class="form-group col-xs-12 floating-label-form-group controls">
                                     {{ subreddit.time.label }}

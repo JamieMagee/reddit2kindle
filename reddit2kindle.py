@@ -60,6 +60,7 @@ def convert():
         return jsonify(type='danger', text=util.validate_request_subreddit(request.form))
 
     subreddit = request.form['subreddit']
+    include_comments = request.form['comments']
     time = request.form['time']
     limit = int(request.form['limit'])
     address = request.form['email']
@@ -73,11 +74,16 @@ def convert():
             title = 'Top ' + str(limit) + ' posts from /r/' + subreddit + ' over the past ' + time
         top = []
         for post in posts:
+            comments = None
+            if include_comments == 'true':
+                post.replace_more_comments(limit=0)
+                comments = util.get_comments(post, request.form['comments_style'])
             try:
                 top.append({'title': post.title,
-                            'body': util.get_readability(post.url) if post.selftext == '' else util.markdown(
+                            'body': util.get_readability(post.url) if not post.url.startswith('https://www.reddit.com/r/') else util.markdown(
                                     post.selftext),
-                            'author': '[deleted]' if post.author is None else post.author.name})
+                            'author': '[deleted]' if post.author is None else post.author.name,
+                            'comments': comments})
             except:
                 pass
     except:
