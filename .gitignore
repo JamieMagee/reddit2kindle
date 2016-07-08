@@ -6,6 +6,7 @@ env/
 
 # IDE
 .idea
+*.iml
 
 settings.cfg
 web.config
