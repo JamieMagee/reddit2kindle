@@ -10,6 +10,6 @@ requests==2.10.0
 six==1.10.0
 smtpapi==0.3.1
 unittest2py3k==0.5.1
-update-checker==0.11
+update-checker==0.12
 Werkzeug==0.11.10
 WTForms==2.1
