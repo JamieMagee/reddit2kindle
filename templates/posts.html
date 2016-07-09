@@ -15,8 +15,8 @@
         }
 
         .container {
-            padding-right: 15px;
-            padding-left: 15px;
+            padding-right: 5px;
+            padding-left: 5px;
             margin-right: auto;
             margin-left: auto;
         }
@@ -98,10 +98,20 @@
     </style>
 </head>
 <body>
+<div class="container">
+    <div class="page-header">
+        <h1>Table of Contents</h1>
+    </div>
+    <ol>
+        {% for post in posts %}
+            <li><a href="#{{ loop.index }}">{{ post.title }}</a></li>
+        {% endfor %}
+    </ol>
+</div>
 {% for post in posts %}
     <div class="container">
         <div class="page-header">
-            <h1>{{ post.title }}</h1>
+            <h1 id="{{ loop.index }}">{{ post.title }}</h1>
             <span>{{ post.author }}</span>
         </div>
         {% if post.body %}
