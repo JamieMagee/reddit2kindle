@@ -28,12 +28,7 @@ def thread():
     except:
         return jsonify(type='danger', text='That wasn\'t a reddit link, was it?')
 
-    comments = None
-    if request.form['comments'] == 'true':
-        submission.replace_more_comments(limit=0)
-        comments = util.get_comments(submission, request.form['comments_style'])
-
-    if submission.selftext == '':
+    if not submission.url.startswith('https://www.reddit.com/r/'):
         body = util.get_readability(submission.url)
     else:
         body = util.markdown(submission.selftext, output_format='html5')
@@ -43,6 +38,11 @@ def thread():
         author = submission.author.name
     address = request.form['email']
     kindle_address = request.form['kindle_address']
+
+    comments = None
+    if request.form['comments'] == 'true':
+        submission.replace_more_comments(limit=0)
+        comments = util.get_comments(submission, request.form['comments_style'], author)
 
     attachment = render_template('comments.html', title=title, body=body, author=author, comments=comments)
 
@@ -74,22 +74,23 @@ def convert():
             title = 'Top ' + str(limit) + ' posts from /r/' + subreddit + ' over the past ' + time
         top = []
         for post in posts:
+            author = '[deleted]' if post.author is None else post.author.name
             comments = None
             if include_comments == 'true':
                 post.replace_more_comments(limit=0)
-                comments = util.get_comments(post, request.form['comments_style'])
+                comments = util.get_comments(post, request.form['comments_style'], author)
             try:
                 top.append({'title': post.title,
                             'body': util.get_readability(post.url) if not post.url.startswith('https://www.reddit.com/r/') else util.markdown(
                                     post.selftext),
-                            'author': '[deleted]' if post.author is None else post.author.name,
+                            'author': author,
                             'comments': comments})
             except:
                 pass
     except:
         return jsonify(type='danger', text='That ain\'t no subreddit I\'ve ever heard of!')
 
-    attachment = render_template('posts.html', posts=top)
+    attachment = render_template('posts.html', posts=top, title=title)
 
     status = util.send_email(address, kindle_address, attachment, title)
 

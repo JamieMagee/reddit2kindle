@@ -10,32 +10,36 @@ import requests
 from markdown import markdown
 
 
-def to_html_numbers(comment):
-    result = markdown(comment.body) + '<footer>' + comment.author.name + '</footer>'
-    children = ['<li>' + to_html_numbers(reply) + '</li>' for reply in comment.replies if
+def to_html_numbers(comment, op):
+    result = markdown(comment.body) + \
+             ('<footer class="op">' if comment.author.name == op else '<footer>') + \
+             comment.author.name + '</footer>'
+    children = ['<li>' + to_html_numbers(reply, op) + '</li>' for reply in comment.replies if
                 reply.author is not None]
     if children:
         result += '<ol>' + ''.join(children) + '</ol>'
     return result
 
 
-def to_html_quotes(comment):
-    result = markdown(comment.body) + '<footer>' + comment.author.name + '</footer>'
-    children = ['<blockquote>' + to_html_quotes(reply) + '</blockquote>' for reply in comment.replies if
+def to_html_quotes(comment, op):
+    result = markdown(comment.body) + \
+             ('<footer class="op">' if comment.author.name == op else '<footer>') + \
+             comment.author.name + '</footer>'
+    children = ['<blockquote>' + to_html_quotes(reply, op) + '</blockquote>' for reply in comment.replies if
                 reply.author is not None]
     if children:
         result += ''.join(children)
     return result
 
 
-def get_comments(submission, comments_style):
+def get_comments(submission, comments_style, op):
     out = '<ol>' if comments_style == 'numbers' else ''
     for comment in submission.comments:
         if comment.author is not None:
             if comments_style == 'numbers':
-                out += '<li>' + to_html_numbers(comment) + '</li>'
+                out += '<li>' + to_html_numbers(comment, op) + '</li>'
             else:
-                out += '<blockquote>' + to_html_quotes(comment) + '</blockquote>'
+                out += '<blockquote>' + to_html_quotes(comment, op) + '</blockquote>'
     return out + ('</ol>' if comments_style == 'numbers' else '')
 
 

@@ -83,6 +83,8 @@
         footer:before,
         span:before {
             content: '\2014 \00A0';
+            background-color: white;
+            color: black;
         }
 
         .well {
@@ -94,6 +96,33 @@
             border-radius: 4px;
             -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .05);
             box-shadow: inset 0 1px 1px rgba(0, 0, 0, .05);
+        }
+
+        ol {
+            counter-reset: item;
+            padding: 10px 0;
+        }
+
+        li {
+            display: block;
+            padding-top: 10px;
+            font-weight: 700;
+        }
+
+        li:before {
+            content: counters(item, ".") " ";
+            counter-increment: item;
+            font-weight: bold;
+        }
+
+        li > p {
+            font-weight: normal;
+        }
+
+        .op {
+            background-color: #0055df;
+            display: inline;
+            color: white;
         }
     </style>
 </head>
