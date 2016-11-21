@@ -29,7 +29,7 @@ def thread():
         return jsonify(type='danger', text='That wasn\'t a reddit link, was it?')
 
     if not submission.url.startswith('https://www.reddit.com/r/'):
-        body = util.get_readability(submission.url)
+        body = util.get_content(submission.url)
     else:
         body = util.markdown(submission.selftext, output_format='html5')
     title = submission.title
@@ -44,7 +44,8 @@ def thread():
         submission.replace_more_comments(limit=0)
         comments = util.get_comments(submission, request.form['comments_style'], author)
 
-    attachment = render_template('comments.html', title=title, body=body, author=author, comments=comments)
+    attachment = render_template('comments.html', title=title, body=body, author=author,
+                                 comments=comments)
 
     status = util.send_email(address, kindle_address, attachment, title)
 
@@ -81,8 +82,9 @@ def convert():
                 comments = util.get_comments(post, request.form['comments_style'], author)
             try:
                 top.append({'title': post.title,
-                            'body': util.get_readability(post.url) if not post.url.startswith('https://www.reddit.com/r/') else util.markdown(
-                                    post.selftext),
+                            'body': util.get_content(post.url) if not post.url.startswith(
+                                'https://www.reddit.com/r/') else util.markdown(
+                                post.selftext),
                             'author': author,
                             'comments': comments})
             except:

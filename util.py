@@ -25,7 +25,8 @@ def to_html_quotes(comment, op):
     result = markdown(comment.body) + \
              ('<footer class="op">' if comment.author.name == op else '<footer>') + \
              comment.author.name + '</footer>'
-    children = ['<blockquote>' + to_html_quotes(reply, op) + '</blockquote>' for reply in comment.replies if
+    children = ['<blockquote>' + to_html_quotes(reply, op) + '</blockquote>' for reply in
+                comment.replies if
                 reply.author is not None]
     if children:
         result += ''.join(children)
@@ -67,13 +68,13 @@ def get_smtp():
     return server, port
 
 
-def get_readability_token():
+def get_mercury_token():
     if os.path.isfile(os.path.join(os.path.dirname(__file__), 'settings.cfg')):
         config = ConfigParser()
         config.read(os.path.join(os.path.dirname(__file__), 'settings.cfg'))
-        token = config.get('readability', 'token')
+        token = config.get('mercury', 'token')
     else:
-        token = os.environ['READABILITY_TOKEN']
+        token = os.environ['MERCURY_TOKEN']
     return token
 
 
@@ -142,9 +143,10 @@ def get_posts(subreddit, time, limit):
         return r.get_subreddit(subreddit).get_top_from_all(limit=limit)
 
 
-def get_readability(url):
+def get_content(url):
     request = requests.get(
-        'https://readability.com/api/content/v1/parser?url=' + url + '&token=' + get_readability_token())
+        'https://mercury.postlight.com/parser?url=' + url,
+        headers={'x-api-key': get_mercury_token()})
     p = re.compile(r'<img.*?>')
     try:
         return p.sub('', request.json()['content'])

@@ -21,9 +21,9 @@ Installation
         [smtp]
         server=smtp.gmail.com
         port=587
-        [readability]
+        [mercury]
         token=qwertyuiopasdfghjklzxcvbnm
-or create environment variables for `SMTP_USERNAME`,`SMTP_PASSWORD`, `SMTP_SERVER`, `SMTP_PORT`, and `READABILITY_TOKEN`.
+or create environment variables for `SMTP_USERNAME`,`SMTP_PASSWORD`, `SMTP_SERVER`, `SMTP_PORT`, and `MERCURY_TOKEN`.
 4. Run the app `python reddit2kindle.py`
 
 Usage
