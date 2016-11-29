@@ -23,7 +23,7 @@ $(document).ready(function () {
                 comments: $('input[type="checkbox"]:first').prop('checked'),
                 comments_style: $('select[name="comments_style"]:first').val(),
                 email: $('input[name="email"]:first').val(),
-                kindle_address: $('select[name="kindle_address"]:first').val(),
+                kindle_address: $('select[name="kindle_address"]:first').val()
             },
             type: 'POST',
             beforeSend: function (xhr) {
@@ -40,6 +40,12 @@ $(document).ready(function () {
                     $('input[name="email"]').val(storage.email);
                     $('select[name="kindle_address"]').val(storage.kindle_address);
                 }
+            })
+            .fail(function () {
+                $(':submit').button('reset');
+                $('.modal-text').text('Oops! Something went wrong. Try refreshing the page.');
+                $('.modal-body').removeClass().addClass('modal-body alert alert-danger');
+                $('#message').modal('show');
             });
     });
 
@@ -75,6 +81,12 @@ $(document).ready(function () {
                     $('select[name="kindle_address"]').val(storage.kindle_address);
                 }
             })
+            .fail(function () {
+                $(':submit').button('reset');
+                $('.modal-text').text('Oops! Something went wrong. Try refreshing the page.');
+                $('.modal-body').removeClass().addClass('modal-body alert alert-danger');
+                $('#message').modal('show');
+            });
     });
 
     $('.collapse').on('show.bs.collapse hide.bs.collapse', function (n) {
