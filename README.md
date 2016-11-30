@@ -23,7 +23,10 @@ Installation
         port=587
         [mercury]
         token=qwertyuiopasdfghjklzxcvbnm
-or create environment variables for `SMTP_USERNAME`,`SMTP_PASSWORD`, `SMTP_SERVER`, `SMTP_PORT`, and `MERCURY_TOKEN`.
+        [reddit]
+        client_id=123abc
+        client_secret=qwertyuiopasdfghjklzxcvbnm
+or create environment variables for `SMTP_USERNAME`,`SMTP_PASSWORD`, `SMTP_SERVER`, `SMTP_PORT`, `MERCURY_TOKEN`, `CLIENT_ID`, and `CLIENT_SECRET`.
 4. Run the app `python reddit2kindle.py`
 
 Usage

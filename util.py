@@ -78,6 +78,18 @@ def get_mercury_token():
     return token
 
 
+def get_reddit_oauth():
+    if os.path.isfile(os.path.join(os.path.dirname(__file__), 'settings.cfg')):
+        config = ConfigParser()
+        config.read(os.path.join(os.path.dirname(__file__), 'settings.cfg'))
+        client_id = config.get('reddit', 'client_id')
+        client_secret = config.get('reddit', 'client_secret')
+    else:
+        client_id = os.environ['CLIENT_ID']
+        client_secret = os.environ['CLIENT_SECRET']
+    return client_id, client_secret
+
+
 def send_email(to, kindle_address, attachment, title):
     msg = MIMEMultipart()
     msg['From'] = 'convert@reddit2kindle.com'
@@ -129,18 +141,7 @@ def validate_request_subreddit(values):
 
 
 def get_posts(subreddit, time, limit):
-    if time == 'hour':
-        return r.get_subreddit(subreddit).get_top_from_hour(limit=limit)
-    elif time == 'day':
-        return r.get_subreddit(subreddit).get_top_from_day(limit=limit)
-    elif time == 'week':
-        return r.get_subreddit(subreddit).get_top_from_week(limit=limit)
-    elif time == 'month':
-        return r.get_subreddit(subreddit).get_top_from_month(limit=limit)
-    elif time == 'year':
-        return r.get_subreddit(subreddit).get_top_from_year(limit=limit)
-    elif time == 'all':
-        return r.get_subreddit(subreddit).get_top_from_all(limit=limit)
+    return r.subreddit(subreddit).top(time_filter=time, limit=limit)
 
 
 def get_content(url):
@@ -154,4 +155,5 @@ def get_content(url):
         return ''
 
 
-r = praw.Reddit(user_agent='reddit2kindle')
+r = praw.Reddit(user_agent='reddit2kindle', client_id=get_reddit_oauth()[0],
+                client_secret=get_reddit_oauth()[1])

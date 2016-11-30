@@ -24,7 +24,7 @@ def thread():
         return jsonify(type='danger', text=util.validate_request_post(request.form))
 
     try:
-        submission = util.r.get_submission(url=request.form['submission'])
+        submission = util.r.submission(url=request.form['submission'])
     except:
         return jsonify(type='danger', text='That wasn\'t a reddit link, was it?')
 
@@ -41,7 +41,7 @@ def thread():
 
     comments = None
     if request.form['comments'] == 'true':
-        submission.replace_more_comments(limit=0)
+        submission.comments.replace_more()
         comments = util.get_comments(submission, request.form['comments_style'], author)
 
     attachment = render_template('comments.html', title=title, body=body, author=author,
@@ -78,7 +78,7 @@ def convert():
             author = '[deleted]' if post.author is None else post.author.name
             comments = None
             if include_comments == 'true':
-                post.replace_more_comments(limit=0)
+                post.comments.replace_more()
                 comments = util.get_comments(post, request.form['comments_style'], author)
             try:
                 top.append({'title': post.title,
