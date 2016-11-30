@@ -1,11 +1,11 @@
-from flask_wtf import Form
+from flask_wtf import FlaskForm
 from flask_wtf.csrf import CsrfProtect
 from wtforms import StringField, IntegerField, SelectField, BooleanField
 
 csrf = CsrfProtect()
 
 
-class Submission(Form):
+class Submission(FlaskForm):
     submission = StringField('Submission URL')
     comments = BooleanField('Include comments')
     comments_style = SelectField('Comments style', choices=[('numbers', 'numbers'), ('quotes', 'quotes')])
@@ -13,7 +13,7 @@ class Submission(Form):
     kindle_address = SelectField('Kindle address', choices=[('normal', '@kindle.com'), ('free', '@free.kindle.com')])
 
 
-class Subreddit(Form):
+class Subreddit(FlaskForm):
     subreddit = StringField('Subreddit')
     comments = BooleanField('Include comments')
     comments_style = SelectField('Comments style', choices=[('numbers', 'numbers'), ('quotes', 'quotes')])
