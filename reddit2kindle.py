@@ -41,7 +41,7 @@ def thread():
 
     comments = None
     if request.form['comments'] == 'true':
-        submission.comments.replace_more()
+        submission.comments.replace_more(limit=0)
         comments = util.get_comments(submission, request.form['comments_style'], author)
 
     attachment = render_template('comments.html', title=title, body=body, author=author,
@@ -78,7 +78,7 @@ def convert():
             author = '[deleted]' if post.author is None else post.author.name
             comments = None
             if include_comments == 'true':
-                post.comments.replace_more()
+                post.comments.replace_more(limit=0)
                 comments = util.get_comments(post, request.form['comments_style'], author)
             try:
                 top.append({'title': post.title,
