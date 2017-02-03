@@ -1,9 +1,9 @@
 reddit2kindle [![Libraries.io for GitHub](https://img.shields.io/librariesio/github/JamieMagee/reddit2kindle.svg)](https://libraries.io/github/JamieMagee/reddit2kindle)
 =============
 
-A web app to convert a reddit post and comments into an e-book, and send it directly to your kindle device or app
+A web app to convert a reddit post and comments into an e-book, and send it directly to your kindle device or app.
 
-Now you can read your favourite subreddits from the comfort of your e-reader. Here is a preview of the web app and the output it produces
+Now you can read your favourite subreddits from the comfort of your e-reader. Here is a preview of the web app and the output it produces.
 
 ![Web app](https://i.imgur.com/NQfG9Nt.png)
 
@@ -11,7 +11,7 @@ Now you can read your favourite subreddits from the comfort of your e-reader. He
 
 Installation
 ============
-1. Install [Python 3](https://www.python.org/downloads) and [pip](http://pip.readthedocs.org/en/latest/installing.html)
+1. Install [Python 3](https://www.python.org/downloads)
 2. Install the required packages `pip install -r requirements.txt`
 3. Either create a `settings.cfg` file of the format:
 
