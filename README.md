@@ -1,5 +1,7 @@
-reddit2kindle [![Libraries.io for GitHub](https://img.shields.io/librariesio/github/JamieMagee/reddit2kindle.svg)](https://libraries.io/github/JamieMagee/reddit2kindle)
+reddit2kindle 
 =============
+[![Libraries.io for GitHub](https://img.shields.io/librariesio/github/JamieMagee/reddit2kindle.svg)](https://libraries.io/github/JamieMagee/reddit2kindle)
+[![license](https://img.shields.io/github/license/mashape/apistatus.svg)](https://opensource.org/licenses/MIT)
 
 A web app to convert a reddit post and comments into an e-book, and send it directly to your kindle device or app.
 
