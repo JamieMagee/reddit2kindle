@@ -2,7 +2,7 @@ Flask==0.12
 Flask-WTF==0.13.1
 gunicorn==19.7.1
 itsdangerous==0.24
-Jinja2==2.8
+Jinja2==2.9.5
 Markdown==2.6.7
 MarkupSafe==0.23
 praw==4.1.0
