@@ -5,7 +5,7 @@ itsdangerous==0.24
 Jinja2==2.9.6
 Markdown==2.6.8
 MarkupSafe==1.0
-praw==4.1.0
+praw==4.5.0
 requests==2.12.4
 six==1.10.0
 smtpapi==0.3.1
