@@ -6,7 +6,7 @@ Jinja2==2.9.6
 Markdown==2.6.8
 MarkupSafe==1.0
 praw==4.5.1
-requests==2.14.2
+requests==2.18.1
 six==1.10.0
 smtpapi==0.3.1
 unittest2py3k==0.5.1
