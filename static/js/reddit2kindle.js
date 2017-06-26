@@ -35,7 +35,7 @@ $(document).ready(function () {
                 $('.modal-text').text(data.text);
                 $('.modal-body').removeClass().addClass('modal-body alert alert-' + data.type);
                 $('#message').modal('show');
-                if (data.type == 'success') {
+                if (data.type === 'success') {
                     $('#post')[0].reset();
                     $('input[name="email"]').val(storage.email);
                     $('select[name="kindle_address"]').val(storage.kindle_address);
@@ -75,7 +75,7 @@ $(document).ready(function () {
                 $('.modal-text').text(data.text);
                 $('.modal-body').removeClass().addClass('modal-body alert alert-' + data.type);
                 $('#message').modal('show');
-                if (data.type == 'success') {
+                if (data.type === 'success') {
                     $('#subreddit')[0].reset();
                     $('input[name="email"]').val(storage.email);
                     $('select[name="kindle_address"]').val(storage.kindle_address);
