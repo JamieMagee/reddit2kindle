@@ -3,6 +3,7 @@
 
 # Distribution / packaging
 env/
+venv/
 
 # IDE
 .idea
