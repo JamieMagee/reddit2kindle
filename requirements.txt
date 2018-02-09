@@ -7,7 +7,7 @@ gunicorn==19.7.1
 idna==2.6
 itsdangerous==0.24
 Jinja2==2.10
-Markdown==2.6.9
+Markdown==2.6.11
 MarkupSafe==1.0
 praw==5.3.0
 prawcore==0.13.0
