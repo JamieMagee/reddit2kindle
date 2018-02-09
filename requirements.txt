@@ -10,7 +10,7 @@ Jinja2==2.10
 Markdown==2.6.9
 MarkupSafe==1.0
 praw==5.2.0
-prawcore==0.12.0
+prawcore==0.13.0
 requests==2.18.4
 six==1.11.0
 smtpapi==0.3.1
