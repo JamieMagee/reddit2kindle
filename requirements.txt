@@ -4,7 +4,7 @@ click==6.7
 Flask==1.0.2
 Flask-WTF==0.14.2
 gunicorn==19.7.1
-idna==2.6
+idna==2.7
 itsdangerous==0.24
 Jinja2==2.10
 Markdown==2.6.11
