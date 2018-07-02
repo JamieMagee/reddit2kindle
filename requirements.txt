@@ -18,4 +18,4 @@ unittest2py3k==0.5.1
 update-checker==0.16
 urllib3==1.23
 Werkzeug==0.14.1
-WTForms==2.1
+WTForms==2.2.1
