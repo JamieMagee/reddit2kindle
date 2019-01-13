@@ -11,7 +11,7 @@ Markdown==3.0.1
 MarkupSafe==1.0
 praw==6.0.0
 prawcore==1.0.0
-requests==2.19.1
+requests==2.21.0
 six==1.11.0
 smtpapi==0.3.1
 unittest2py3k==0.5.1
