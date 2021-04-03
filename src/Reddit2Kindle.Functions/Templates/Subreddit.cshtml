@@ -1,0 +1,6 @@
+﻿@inherits RazorLight.TemplatePage<Reddit2Kindle.Functions.Contracts.Templates.SubredditTemplate>
+
+@foreach (var template in Model.Templates)
+{
+    await IncludeAsync(template.TemplateName, template);
+}

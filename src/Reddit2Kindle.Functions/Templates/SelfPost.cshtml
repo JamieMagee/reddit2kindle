@@ -1,0 +1,27 @@
+﻿@inherits RazorLight.TemplatePage<Reddit2Kindle.Functions.Contracts.Templates.SelfPostTemplate>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>@Model.Post.Title</title>
+    @{ await IncludeAsync("Templates.Styles.Css"); }
+</head>
+<body>
+<div class="container">
+    <div class="page-header">
+        <h1>@Model.Post.Title</h1>
+        <span>@Model.Post.Author</span>
+    </div>
+    @if (!string.IsNullOrWhiteSpace(Model.Post.SelfTextHTML))
+    {
+        <div class="well">
+            @Raw(Model.Post.SelfTextHTML)
+        </div>
+    }
+    @foreach (var comment in Model.Post.Comments.GetComments("top"))
+    {
+        await IncludeAsync("Templates.Partials.QuoteComments", comment);
+    }
+</div>
+</body>
+</html>

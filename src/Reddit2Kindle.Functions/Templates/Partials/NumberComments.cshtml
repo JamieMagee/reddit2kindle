@@ -1,0 +1,13 @@
+﻿@using Reddit.Controllers
+@inherits RazorLight.TemplatePage<Reddit.Controllers.Comment>
+
+<li>
+    @Raw(Model.BodyHTML)
+    <footer>@Model.Author</footer>
+    <ol>
+        @foreach (var reply in Model.replies?.Where(reply => reply is not null) ?? Enumerable.Empty<Comment>())
+        {
+            await IncludeAsync("Templates.Partials.NumberComments", reply);
+        }
+    </ol>
+</li>

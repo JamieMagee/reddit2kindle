@@ -1,0 +1,161 @@
+﻿@page "/"
+@using Blazored.LocalStorage
+@using Reddit2Kindle.Blazor.Contracts
+@using Reddit2Kindle.Blazor.Services
+@using Reddit2Kindle.Contracts
+@inject ILocalStorageService _localStorage
+@inject HttpClient _client
+@inject ISnackbar _snackbar
+
+<MudContainer Class="mudblazor-index">
+    <MudGrid>
+        <MudItem xs="12" sm="12" md="12">
+            <MudTabs Elevation="2" Rounded="true" ApplyEffectsToContainer="true" PanelClass="pa-6">
+                <MudTabPanel Text="Post">
+                    <EditForm Model="@_postModel" OnValidSubmit="OnValidSubmitPost">
+                        <DataAnnotationsValidator/>
+                        <MudCard Elevation="0">
+                            <MudCardContent>
+                                <MudTextField Label="Submission URL"
+                                              @bind-Value="_postModel.Post" For="@(() => _postModel.Post)"/>
+                                <MudItem Class="d-inline-flex">
+                                    <MudTextField Label="Kindle Email" Class="flex-grow-1"
+                                                  @bind-Value="_postModel.Email" For="@(() => _postModel.Email)"/>
+                                    <MudSelect T="string" @bind-Value="_postModel.Domain">
+                                        <MudSelectItem Value="@("@kindle.com")"/>
+                                        <MudSelectItem Value="@("@free.kindle.com")"/>
+                                    </MudSelect>
+                                </MudItem>
+                            </MudCardContent>
+                            <MudCardActions>
+                                @if (_isLoading)
+                                {
+                                    <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary" Class="ml-auto" Disabled="true">
+                                        <MudProgressCircular Size="Size.Small" Color="Color.Primary" Indeterminate="true"/>
+                                    </MudButton>
+                                }
+                                else
+                                {
+                                    <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary" Class="ml-auto">Submit</MudButton>
+                                }
+                            </MudCardActions>
+                        </MudCard>
+                    </EditForm>
+                </MudTabPanel>
+                <MudTabPanel Text="Subreddit">
+                    <EditForm Model="@_subredditModel" OnValidSubmit="OnValidSubmitSubreddit">
+                        <DataAnnotationsValidator/>
+                        <MudCard Elevation="0">
+                            <MudCardContent>
+                                <MudTextField Label="Subreddit"
+                                              @bind-Value="_subredditModel.Subreddit" For="@(() => _subredditModel.Subreddit)" Adornment="Adornment.Start" AdornmentText="/r/"/>
+                                <MudItem Class="d-inline-flex">
+                                    <MudTextField Label="Kindle Email" Class="flex-grow-1"
+                                                  @bind-Value="_subredditModel.Email" For="@(() => _subredditModel.Email)"/>
+                                    <MudSelect T="string" @bind-Value="_subredditModel.Domain">
+                                        <MudSelectItem Value="@("@kindle.com")"/>
+                                        <MudSelectItem Value="@("@free.kindle.com")"/>
+                                    </MudSelect>
+                                </MudItem>
+                            </MudCardContent>
+                            <MudCardActions>
+                                @if (_isLoading)
+                                {
+                                    <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary" Class="ml-auto" Disabled="true">
+                                        <MudProgressCircular Size="Size.Small" Color="Color.Primary" Indeterminate="true"/>
+                                    </MudButton>
+                                }
+                                else
+                                {
+                                    <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary" Class="ml-auto">Submit</MudButton>
+                                }
+                            </MudCardActions>
+                        </MudCard>
+                    </EditForm>
+                </MudTabPanel>
+            </MudTabs>
+        </MudItem>
+    </MudGrid>
+</MudContainer>
+
+@code
+{
+    readonly SubmitPostForm _postModel = new();
+
+    readonly SubmitSubredditForm _subredditModel = new();
+
+    private bool _isLoading;
+
+    [Inject]
+    public Reddit2KindleService Service { get; set; }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if ((string.IsNullOrWhiteSpace(_postModel.Email) || string.IsNullOrWhiteSpace(_subredditModel.Email))
+            && await _localStorage.ContainKeyAsync("email")
+            && !string.IsNullOrWhiteSpace(await _localStorage.GetItemAsStringAsync("email")))
+        {
+            _postModel.Email = await _localStorage.GetItemAsStringAsync("email");
+            _subredditModel.Email = await _localStorage.GetItemAsStringAsync("email");
+        }
+        if ((string.IsNullOrWhiteSpace(_postModel.Domain) || string.IsNullOrWhiteSpace(_subredditModel.Domain))
+            && await _localStorage.ContainKeyAsync("domain")
+            && !string.IsNullOrWhiteSpace(await _localStorage.GetItemAsStringAsync("domain")))
+        {
+            _postModel.Domain = await _localStorage.GetItemAsStringAsync("domain");
+            _subredditModel.Domain = await _localStorage.GetItemAsStringAsync("domain");
+        }
+    }
+
+    private async Task OnValidSubmitPost(EditContext editContext)
+    {
+        _isLoading = true;
+        var postRequest = new PostRequest
+        {
+            Email = _postModel.Email + _postModel.Domain,
+            Post = new Uri(_postModel.Post)
+        };
+
+        await _localStorage.SetItemAsync("email", _postModel.Email);
+        await _localStorage.SetItemAsync("domain", _postModel.Domain);
+
+        try
+        {
+            await Service.SubmitPost(postRequest);
+            _snackbar.Add("Success", Severity.Success);
+            _postModel.Post = string.Empty;
+        }
+        catch (Exception)
+        {
+            _snackbar.Add("An error occured", Severity.Error);
+        }
+
+        _isLoading = false;
+    }
+
+    private async Task OnValidSubmitSubreddit(EditContext editContext)
+    {
+        _isLoading = true;
+        var subredditRequest = new SubredditRequest
+        {
+            Email = _subredditModel.Email + _subredditModel.Domain,
+            Subreddit = _subredditModel.Subreddit
+        };
+
+        await _localStorage.SetItemAsync("email", _subredditModel.Email);
+        await _localStorage.SetItemAsync("domain", _subredditModel.Domain);
+
+        try
+        {
+            await Service.SubmitSubreddit(subredditRequest);
+            _snackbar.Add("Success", Severity.Success);
+            _subredditModel.Subreddit = string.Empty;
+        }
+        catch (Exception)
+        {
+            _snackbar.Add("An error occured", Severity.Error);
+        }
+
+        _isLoading = false;
+    }
+}

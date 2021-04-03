@@ -1,0 +1,48 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+        <TargetFramework>net5.0</TargetFramework>
+        <OutputType>Exe</OutputType>
+        <AzureFunctionsVersion>V3</AzureFunctionsVersion>
+        <_FunctionsSkipCleanOutput>true</_FunctionsSkipCleanOutput>
+        <PreserveCompilationContext>true</PreserveCompilationContext>
+    </PropertyGroup>
+    <ItemGroup>
+        <PackageReference Include="FluentEmail.SendGrid" Version="3.0.0" />
+        <PackageReference Include="Microsoft.Azure.Functions.Worker" Version="1.2.0" />
+        <PackageReference Include="Microsoft.Azure.Functions.Worker.Sdk" Version="1.0.2" OutputItemType="Analyzer" />
+        <PackageReference Include="Microsoft.Azure.Functions.Worker.Extensions.Http" Version="3.0.13" />
+        <PackageReference Include="Microsoft.Azure.Functions.Worker.Extensions.Storage" Version="4.0.4" />
+        <PackageReference Include="Microsoft.Extensions.Configuration" Version="5.0.0" />
+        <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="5.0.0" />
+        <PackageReference Include="RazorLight" Version="2.0.0-rc.3" />
+        <PackageReference Include="Reddit" Version="1.5.0" />
+        <PackageReference Include="SmartReader" Version="0.7.5" />
+        <PackageReference Include="StrongGrid" Version="0.78.0" />
+    </ItemGroup>
+    <ItemGroup>
+        <ProjectReference Include="..\Reddit2Kindle.Contracts\Reddit2Kindle.Contracts.csproj" />
+    </ItemGroup>
+    <ItemGroup>
+        <None Update="host.json">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </None>
+        <None Update="local.settings.json">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </None>
+        <None Update="appsettings.json">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </None>
+        <None Update="appsettings.Development.json">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToPublishDirectory>Never</CopyToPublishDirectory>
+        </None>
+    </ItemGroup>
+    <ItemGroup>
+      <EmbeddedResource Include="Templates\SelfPost.cshtml" />
+      <EmbeddedResource Include="Templates\Styles\Css.cshtml" />
+      <EmbeddedResource Include="Templates\Partials\QuoteComments.cshtml" />
+      <EmbeddedResource Include="Templates\Partials\NumberComments.cshtml" />
+      <EmbeddedResource Include="Templates\LinkPost.cshtml" />
+      <EmbeddedResource Include="Templates\Subreddit.cshtml" />
+    </ItemGroup>
+</Project>

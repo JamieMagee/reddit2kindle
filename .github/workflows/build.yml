@@ -1,0 +1,50 @@
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+name: Build and Deploy
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@master
+          
+      - name: Setup .NET Core 3.1
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: '3.1.x'
+
+      - name: Setup .NET 5.0
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: '5.0.x'
+
+      - name: dotnet publish
+        run: |
+          dotnet publish src/Reddit2Kindle.Blazor -c Release -o Blazor
+          dotnet publish src/Reddit2Kindle.Functions -c Release -o Functions
+
+      - name: Azure Login
+        if: ${{ github.ref == 'refs/heads/main' }}
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: Deploy webapp
+        if: ${{ github.ref == 'refs/heads/main' }}
+        uses: azure/webapps-deploy@v2
+        with:
+          app-name: reddit2kindle-blazor
+          package: 'Blazor'
+
+      - name: Deploy functions
+        if: ${{ github.ref == 'refs/heads/main' }}
+        uses: azure/functions-action@v1
+        with:
+          app-name: reddit2kindle-functions
+          package: 'Functions'

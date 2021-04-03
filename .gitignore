@@ -1,28 +1,5 @@
-# Byte-compiled / optimized / DLL files
-*.py[cod]
-
-# Distribution / packaging
-env/
-venv/
-
-# IDE
-.idea
-*.iml
-
-settings.cfg
-web.debug.config
-ptvs_virtualenv_proxy.py
-
-# User-specific files
-*.suo
-*.user
-
-# Build results
-[Dd]ebug/
+.idea/
+.vs/
 [Bb]in/
 [Oo]bj/
-
-# Publish Web Output
-# TODO: Comment the next line if you want to checkin your web deploy settings
-# but database connection strings (with potential passwords) will be unencrypted
-*.pubxml
+appsettings.Development.json
