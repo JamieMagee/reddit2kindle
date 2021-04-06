@@ -48,8 +48,8 @@ def get_auth():
     if os.path.isfile(os.path.join(os.path.dirname(__file__), 'settings.cfg')):
         config = ConfigParser()
         config.read(os.path.join(os.path.dirname(__file__), 'settings.cfg'))
-        username = config.get('auth', 'username')
-        password = config.get('auth', 'password')
+        username = config.get('smtp_auth', 'username')
+        password = config.get('smtp_auth', 'password')
     else:
         username = os.environ['SMTP_USERNAME']
         password = os.environ['SMTP_PASSWORD']
@@ -91,12 +91,15 @@ def get_reddit_oauth():
 
 
 def send_email(to, kindle_address, attachment, title):
+    smtp_auth = get_auth() #From address has to be the smtp username unless gmail wont send email
     msg = MIMEMultipart()
-    msg['From'] = 'convert@reddit2kindle.com'
+    msg['From'] = smtp_auth[0]
     if kindle_address == 'free':
         msg['To'] = to + '@free.kindle.com'
     else:
         msg['To'] = to + '@kindle.com'
+   
+    print(msg)
     title = "".join(c for c in title if c.isalnum() or c.isspace()).rstrip()
     msg['Subject'] = title
 
@@ -105,18 +108,20 @@ def send_email(to, kindle_address, attachment, title):
                       filename=title + '.html')
     msg.attach(attach)
 
+    
     s = smtplib.SMTP(get_smtp()[0], get_smtp()[1])
-
-    s.login(get_auth()[0], get_auth()[1])
+    s.ehlo() #sending hello before starttls
+    s.starttls()
+    s.login(smtp_auth[0], smtp_auth[1]) #Strongly recommended to use it behind https
     s.send_message(msg)
 
     s.quit()
 
 
 def validate_request_post(values):
-    if values['submission'] is '':
+    if values['submission'] == '':
         return 'You need to put a URL in!'
-    if values['email'] is '':
+    if values['email'] == '':
         return 'How am I supposed to send it to you without an email address?'
     if values['kindle_address'] not in ['free', 'normal']:
         return 'Which kindle address do you want me to send to?'
@@ -124,16 +129,16 @@ def validate_request_post(values):
 
 
 def validate_request_subreddit(values):
-    if values['subreddit'] is '':
+    if values['subreddit'] == '':
         return 'I need a subreddit name!'
     if values['time'] not in ['all', 'year', 'month', 'week', 'day', 'hour']:
         return 'That\'s not a valid time period, is it?'
     try:
-        if values['limit'] is '' or 0 > int(values['limit']) or int(values['limit']) > 25:
+        if values['limit'] == '' or 0 > int(values['limit']) or int(values['limit']) > 25:
             return 'How many posts would you like?'
     except ValueError:
         return 'How many posts would you like?'
-    if values['email'] is '':
+    if values['email'] == '':
         return 'How am I supposed to send it to you without an email address?'
     if values['kindle_address'] not in ['free', 'normal']:
         return 'Which kindle address do you want me to send to?'
@@ -145,9 +150,12 @@ def get_posts(subreddit, time, limit):
 
 
 def get_content(url):
+    print(url)
     request = requests.get(
         'https://mercury.postlight.com/parser?url=' + url,
         headers={'x-api-key': get_mercury_token()})
+
+    print(request)
     p = re.compile(r'<img.*?>')
     try:
         return p.sub('', request.json()['content'])

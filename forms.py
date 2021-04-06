@@ -1,8 +1,8 @@
 from flask_wtf import FlaskForm
-from flask_wtf.csrf import CsrfProtect
+from flask_wtf.csrf import CSRFProtect
 from wtforms import StringField, IntegerField, SelectField, BooleanField
 
-csrf = CsrfProtect()
+csrf = CSRFProtect()
 
 
 class Submission(FlaskForm):

@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 import os
 
 from flask import Flask, request, jsonify
@@ -20,6 +22,7 @@ def index():
 
 @app.route('/thread', methods=['POST'])
 def thread():
+    #print(dir(util))
     if util.validate_request_post(request.form) is not None:
         return jsonify(type='danger', text=util.validate_request_post(request.form))
 
@@ -28,10 +31,12 @@ def thread():
     except:
         return jsonify(type='danger', text='That wasn\'t a reddit link, was it?')
 
+    
     if not submission.url.startswith('https://www.reddit.com/r/'):
         body = util.get_content(submission.url)
     else:
         body = util.markdown(submission.selftext, output_format='html5')
+    
     title = submission.title
     author = "[deleted]"
     if submission.author is not None:
@@ -48,7 +53,6 @@ def thread():
                                  comments=comments)
 
     status = util.send_email(address, kindle_address, attachment, title)
-
     if status is None:
         return jsonify(type='success', text='Success!')
     else:

@@ -17,17 +17,17 @@ Installation
 2. Install the required packages `pip install -r requirements.txt`
 3. Either create a `settings.cfg` file of the format:
 
-        [auth]
-        username=johndoe@reddit2kindle.com
-        password=hunter2
+        [smtp_auth]
+        username=gmailusername
+        password=gmailpassword
         [smtp]
         server=smtp.gmail.com
         port=587
         [mercury]
         token=qwertyuiopasdfghjklzxcvbnm
         [reddit]
-        client_id=123abc
-        client_secret=qwertyuiopasdfghjklzxcvbnm
+        client_id=createyourown(see Reddit app registration section below)
+        client_secret=createyourown(see Reddit app registration section below)
 or create environment variables for `SMTP_USERNAME`,`SMTP_PASSWORD`, `SMTP_SERVER`, `SMTP_PORT`, `MERCURY_TOKEN`, `CLIENT_ID`, and `CLIENT_SECRET`.
 
 4. Run the app `python reddit2kindle.py`
@@ -40,3 +40,12 @@ You need to add reddit2kindle to your approved Kindle e-mail senders. To do this
 2. Go to "Your Account", select "Manage Your Content and Devices" and then select "Personal Document Settings".
 3. Under "Approved Personal Document E-mail List" click on "Add a new approved e-mail address".
 4. Add "convert@reddit2kindle.com" and select "Add Address".
+
+
+Reddit APP Registration
+======
+
+You need to create a reddit API app using your reddit account for this script to work. To create one: 
+
+Go to: https://github.com/reddit-archive/reddit/wiki/OAuth2
+Copy and Paste the client secret and app id in settings.cfg
