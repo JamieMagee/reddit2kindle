@@ -17,7 +17,7 @@
         <PackageReference Include="RazorLight" Version="2.0.0-rc.3" />
         <PackageReference Include="Reddit" Version="1.5.0" />
         <PackageReference Include="SmartReader" Version="0.7.5" />
-        <PackageReference Include="StrongGrid" Version="0.78.0" />
+        <PackageReference Include="StrongGrid" Version="0.79.0" />
     </ItemGroup>
     <ItemGroup>
         <ProjectReference Include="..\Reddit2Kindle.Contracts\Reddit2Kindle.Contracts.csproj" />
