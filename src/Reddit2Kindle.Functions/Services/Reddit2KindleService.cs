@@ -26,15 +26,6 @@ namespace Reddit2Kindle.Functions.Services
             _sendGridService = sendGridService;
         }
 
-        private async Task<PostTemplate> GetPostTemplate(Post post)
-        {
-            return post switch
-            {
-                SelfPost selfPost => new SelfPostTemplate(selfPost),
-                LinkPost linkPost => new LinkPostTemplate(linkPost, await _readabilityService.GetArticle(linkPost.URL))
-            };
-        }
-
         public async Task SendPost(PostRequest request)
         {
             var post = _redditService.GetPost(request.Post.ToString());
@@ -50,6 +41,30 @@ namespace Reddit2Kindle.Functions.Services
             var subredditTemplate = new SubredditTemplate(postTemplates);
             var attachmentContent = await _razorService.RenderTemplateAsync(subredditTemplate);
             await _sendGridService.SendEmailAsync(request.Email, GenerateTitle(request), attachmentContent);
+        }
+        
+        internal async Task<string> RenderPost(PostRequest request)
+        {
+            var post = _redditService.GetPost(request.Post.ToString());
+            var template = await GetPostTemplate(post);
+            return await _razorService.RenderTemplateAsync(template);
+        }
+        
+        internal async Task<string> RenderSubreddit(SubredditRequest request)
+        {
+            var posts = _redditService.GetSubredditPosts(request.Subreddit, request.TimePeriod);
+            var postTemplates = await Task.WhenAll(posts.Select(GetPostTemplate));
+            var subredditTemplate = new SubredditTemplate(postTemplates);
+            return await _razorService.RenderTemplateAsync(subredditTemplate);
+        }
+        
+        private async Task<PostTemplate> GetPostTemplate(Post post)
+        {
+            return post switch
+            {
+                SelfPost selfPost => new SelfPostTemplate(selfPost),
+                LinkPost linkPost => new LinkPostTemplate(linkPost, await _readabilityService.GetArticle(linkPost.URL))
+            };
         }
     }
 }
