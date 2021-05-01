@@ -21,7 +21,7 @@ namespace Reddit2Kindle.Functions.Functions
 
         [Function("Post")]
         public async Task<HttpAndQueuePost> PostAsync([HttpTrigger(AuthorizationLevel.Anonymous, "post")]
-            HttpRequestData req, FunctionContext context)
+            HttpRequestData req)
         {
             try
             {
@@ -45,7 +45,7 @@ namespace Reddit2Kindle.Functions.Functions
 
         [Function("Subreddit")]
         public async Task<HttpAndQueueSubreddit> SubredditAsync([HttpTrigger(AuthorizationLevel.Anonymous, "post")]
-            HttpRequestData req, FunctionContext context)
+            HttpRequestData req)
         {
             try
             {
