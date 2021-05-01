@@ -2,4 +2,4 @@
 .vs/
 [Bb]in/
 [Oo]bj/
-appsettings.Development.json
+appsettings.*.json
