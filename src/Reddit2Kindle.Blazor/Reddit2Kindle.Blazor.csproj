@@ -3,6 +3,7 @@
     <PropertyGroup>
         <TargetFramework>net5.0</TargetFramework>
         <UserSecretsId>aspnet-Reddit2Kindle.Blazor-1463FA36-1DAE-49AE-AB41-148182F0AD10</UserSecretsId>
+        <NoWarn>8509</NoWarn>
     </PropertyGroup>
 
     <ItemGroup>

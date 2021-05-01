@@ -5,6 +5,7 @@
         <AzureFunctionsVersion>V3</AzureFunctionsVersion>
         <_FunctionsSkipCleanOutput>true</_FunctionsSkipCleanOutput>
         <PreserveCompilationContext>true</PreserveCompilationContext>
+        <NoWarn>8509</NoWarn>
     </PropertyGroup>
     <ItemGroup>
         <PackageReference Include="FluentEmail.SendGrid" Version="3.0.0" />
