@@ -26,7 +26,7 @@ namespace Reddit2Kindle.Functions.Functions
             var postRequest = await req.ReadFromJsonAsync<PostRequest>();
             var response = req.CreateResponse(HttpStatusCode.OK);
             response.Headers.Add("Content-Type", "text/html; charset=utf-8");
-            await response.WriteStringAsync(await _reddit2KindleService.RenderPost(postRequest));
+            await response.WriteStringAsync(await _reddit2KindleService.RenderPostAsync(postRequest));
             return response;
         }
 
@@ -37,7 +37,7 @@ namespace Reddit2Kindle.Functions.Functions
             var subredditRequest = await req.ReadFromJsonAsync<SubredditRequest>();
             var response = req.CreateResponse(HttpStatusCode.OK);
             response.Headers.Add("Content-Type", "text/html; charset=utf-8");
-            await response.WriteStringAsync(await _reddit2KindleService.RenderSubreddit(subredditRequest));
+            await response.WriteStringAsync(await _reddit2KindleService.RenderSubredditAsync(subredditRequest));
             return response;
         }
     }

@@ -18,9 +18,9 @@
             @Raw(Model.Article)
         </div>
     }
-    @foreach (var comment in Model.Post.Comments.GetComments("top"))
+    @foreach (var comment in Model.Post.Comments.GetTop(showMore: false))
     {
-        await IncludeAsync("Templates.Partials.QuoteComments", comment);
+        await IncludeAsync("Templates.Partials.QuoteComments", (Model.Post.Author, comment));
     }
 </div>
 </body>

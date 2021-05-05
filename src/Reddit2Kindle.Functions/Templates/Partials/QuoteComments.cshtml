@@ -1,11 +1,11 @@
 ﻿@using Reddit.Controllers
-@inherits RazorLight.TemplatePage<Reddit.Controllers.Comment>
+@inherits RazorLight.TemplatePage<(string op, Reddit.Controllers.Comment comment)>
 
 <blockquote>
-    @Raw(Model.BodyHTML)
-    <footer>@Model.Author</footer>
-    @foreach (var reply in Model.replies?.Where(reply => reply is not null) ?? Enumerable.Empty<Comment>())
+    @Raw(Model.comment.BodyHTML)
+    <footer class="@(Model.comment.Author == Model.op ? "op" : "")">@Model.comment.Author</footer>
+    @foreach (var reply in Model.comment.replies?.Where(reply => reply is not null) ?? Enumerable.Empty<Comment>())
     {
-        await IncludeAsync("Templates.Partials.QuoteComments", reply);
+        await IncludeAsync("Templates.Partials.QuoteComments", (Model.op, reply));
     }
 </blockquote>

@@ -23,14 +23,14 @@ namespace Reddit2Kindle.Functions.Functions
         public async Task PostAsync([QueueTrigger(PostQueue)] PostRequest request)
         {
             _logger.LogInformation(JsonSerializer.Serialize(request));
-            await _reddit2KindleService.SendPost(request);
+            await _reddit2KindleService.SendPostAsync(request);
         }
 
         [Function("SubredditQueue")]
         public async Task SubredditAsync([QueueTrigger(SubredditQueue)] SubredditRequest request)
         {
             _logger.LogInformation(JsonSerializer.Serialize(request));
-            await _reddit2KindleService.SendSubreddit(request);
+            await _reddit2KindleService.SendSubredditAsync(request);
         }
     }
 }

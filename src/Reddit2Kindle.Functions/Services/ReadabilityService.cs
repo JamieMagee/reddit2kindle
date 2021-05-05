@@ -14,7 +14,7 @@ namespace Reddit2Kindle.Functions.Services
             _logger = logger;
         }
 
-        public async Task<string> GetArticle(string uri)
+        public async Task<string> GetArticleAsync(string uri)
         {
             var reader = new Reader(uri);
             try
