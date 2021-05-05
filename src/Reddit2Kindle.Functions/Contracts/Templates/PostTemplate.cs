@@ -17,5 +17,7 @@ namespace Reddit2Kindle.Functions.Contracts.Templates
         public abstract Post Post { get; }
 
         public abstract string TemplateName { get; }
+        
+        public string? Index { get; set; }
     }
 }

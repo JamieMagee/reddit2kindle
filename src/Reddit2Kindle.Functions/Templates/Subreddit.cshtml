@@ -1,5 +1,30 @@
 ﻿@inherits RazorLight.TemplatePage<Reddit2Kindle.Functions.Contracts.Templates.SubredditTemplate>
 
+@{
+    foreach (var tuple in Model.Templates.Select((template, index) => new
+    {
+        template,
+        index
+    }))
+    {
+        tuple.template.Index = tuple.index.ToString();
+    }
+}
+
+<div class="container">
+    <div class="page-header">
+        <h1>Table of Contents</h1>
+    </div>
+    <ol>
+        @foreach (var template in Model.Templates)
+        {
+            <li>
+                <a href="#@(template.Index)">@(template.Post.Title)</a>
+            </li>
+        }
+    </ol>
+</div>
+
 @foreach (var template in Model.Templates)
 {
     await IncludeAsync(template.TemplateName, template);
