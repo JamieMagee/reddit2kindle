@@ -9,11 +9,11 @@
     <ItemGroup>
         <PackageReference Include="AspNet.Security.OAuth.Reddit" Version="5.0.8" />
         <PackageReference Include="Blazored.LocalStorage" Version="3.0.0" />
-        <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="5.0.7" />
-        <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="5.0.7" />
-        <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="5.0.7" />
-        <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="5.0.7" />
-        <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="5.0.7">
+        <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="5.0.8" />
+        <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="5.0.8" />
+        <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="5.0.8" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="5.0.8" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="5.0.8">
           <PrivateAssets>all</PrivateAssets>
           <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
